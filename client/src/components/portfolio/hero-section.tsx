@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Download, Briefcase, Award, TrendingUp, Users, Star } from "lucide-react";
+import profileImage from "@assets/vs_1756632353606.jpg";
 
 export default function HeroSection() {
   return (
@@ -75,7 +76,7 @@ export default function HeroSection() {
               
               <div className="relative card-elevated p-8 rounded-full shadow-2xl">
                 <img 
-                  src="@assets/vs_1756632353606.jpg" 
+                  src={profileImage} 
                   alt="Vaibhav Selukar professional headshot" 
                   className="relative w-96 h-96 rounded-full object-cover shadow-2xl border-4 border-accent/30 group-hover:border-accent/70 transition-all duration-500" 
                   data-testid="img-hero-profile"
