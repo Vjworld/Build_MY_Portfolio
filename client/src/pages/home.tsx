@@ -7,6 +7,7 @@ import ProjectsSection from "@/components/portfolio/projects-section";
 import SkillsSection from "@/components/portfolio/skills-section";
 import SocialLinksSection from "@/components/portfolio/social-links-section";
 import ProductHuntSection from "@/components/portfolio/product-hunt-section";
+import YouTubeVideosSection from "@/components/portfolio/youtube-videos-section";
 import TestimonialsSection from "@/components/portfolio/testimonials-section";
 import BlogSection from "@/components/blog/blog-section";
 import CommunitySection from "@/components/community/community-section";
@@ -27,6 +28,7 @@ export default function Home() {
         <SkillsSection />
         <SocialLinksSection />
         <ProductHuntSection />
+        <YouTubeVideosSection />
         <TestimonialsSection />
         <BlogSection />
         <CommunitySection />
