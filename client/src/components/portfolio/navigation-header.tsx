@@ -11,37 +11,37 @@ export default function NavigationHeader() {
   const isAdminView = location === "/admin";
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
+    <nav className="sticky top-0 z-50 border-b border-slate-700/50 bg-slate-900/95 backdrop-blur-xl shadow-xl">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2" data-testid="link-home">
-              <h1 className="text-xl font-playfair font-semibold text-primary">
+              <h1 className="text-xl font-playfair font-bold bg-gradient-to-r from-gold to-yellow-400 bg-clip-text text-transparent">
                 Vaibhav Selukar
               </h1>
             </Link>
-            <span className="hidden md:block text-sm text-muted-foreground">
+            <span className="hidden md:block text-sm text-gray-400 font-medium">
               Visionary Leader & AI Expert
             </span>
           </div>
           
-          <div className="hidden md:flex items-center space-x-6">
-            <a href="#portfolio" className="text-foreground hover:text-primary transition-colors" data-testid="link-portfolio">
+          <div className="hidden md:flex items-center space-x-8">
+            <a href="#portfolio" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium hover:scale-105" data-testid="link-portfolio">
               Portfolio
             </a>
-            <a href="#product-hunt" className="text-foreground hover:text-primary transition-colors" data-testid="link-products">
+            <a href="#product-hunt" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium hover:scale-105" data-testid="link-products">
               Products
             </a>
-            <a href="#product-videos" className="text-foreground hover:text-primary transition-colors" data-testid="link-videos">
+            <a href="#product-videos" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium hover:scale-105" data-testid="link-videos">
               Videos
             </a>
-            <a href="#blog" className="text-foreground hover:text-primary transition-colors" data-testid="link-blog">
+            <a href="#blog" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium hover:scale-105" data-testid="link-blog">
               Blog
             </a>
-            <a href="#community" className="text-foreground hover:text-primary transition-colors" data-testid="link-community">
+            <a href="#community" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium hover:scale-105" data-testid="link-community">
               Community
             </a>
-            <a href="#contact" className="text-foreground hover:text-primary transition-colors" data-testid="link-contact">
+            <a href="#contact" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium hover:scale-105" data-testid="link-contact">
               Contact
             </a>
           </div>
@@ -101,24 +101,24 @@ export default function NavigationHeader() {
         
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-border py-4">
+          <div className="md:hidden border-t border-slate-700/50 py-4 bg-slate-800/50 backdrop-blur-xl">
             <div className="flex flex-col space-y-4">
-              <a href="#portfolio" className="text-foreground hover:text-primary transition-colors">
+              <a href="#portfolio" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium px-2 py-1 rounded hover:bg-slate-700/50">
                 Portfolio
               </a>
-              <a href="#product-hunt" className="text-foreground hover:text-primary transition-colors">
+              <a href="#product-hunt" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium px-2 py-1 rounded hover:bg-slate-700/50">
                 Products
               </a>
-              <a href="#product-videos" className="text-foreground hover:text-primary transition-colors">
+              <a href="#product-videos" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium px-2 py-1 rounded hover:bg-slate-700/50">
                 Videos
               </a>
-              <a href="#blog" className="text-foreground hover:text-primary transition-colors">
+              <a href="#blog" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium px-2 py-1 rounded hover:bg-slate-700/50">
                 Blog
               </a>
-              <a href="#community" className="text-foreground hover:text-primary transition-colors">
+              <a href="#community" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium px-2 py-1 rounded hover:bg-slate-700/50">
                 Community
               </a>
-              <a href="#contact" className="text-foreground hover:text-primary transition-colors">
+              <a href="#contact" className="text-gray-300 hover:text-gold transition-all duration-300 font-medium px-2 py-1 rounded hover:bg-slate-700/50">
                 Contact
               </a>
             </div>

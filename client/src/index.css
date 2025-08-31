@@ -4,24 +4,24 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(210, 12%, 22%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(210, 12%, 22%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(210, 12%, 22%);
+  --background: hsl(240, 10%, 4%);
+  --foreground: hsl(0, 0%, 95%);
+  --card: hsl(240, 6%, 10%);
+  --card-foreground: hsl(0, 0%, 95%);
+  --popover: hsl(240, 6%, 10%);
+  --popover-foreground: hsl(0, 0%, 95%);
   --primary: hsl(210, 29%, 24%);
   --primary-foreground: hsl(0, 0%, 98%);
   --secondary: hsl(204, 70%, 53%);
   --secondary-foreground: hsl(0, 0%, 98%);
-  --muted: hsl(210, 40%, 96%);
-  --muted-foreground: hsl(210, 12%, 45%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
   --accent: hsl(4, 90%, 58%);
   --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(4, 90%, 58%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --border: hsl(214, 32%, 91%);
-  --input: hsl(214, 32%, 91%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
   --ring: hsl(210, 29%, 24%);
   --chart-1: hsl(203.8863, 88.2845%, 53.1373%);
   --chart-2: hsl(159.7826, 100%, 36.0784%);
@@ -103,10 +103,27 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-source);
+    min-height: 100vh;
+    background: linear-gradient(135deg, hsl(240, 10%, 4%) 0%, hsl(240, 8%, 6%) 100%);
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-playfair);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+  
+  p {
+    font-family: var(--font-inter);
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: -0.011em;
+  }
+  
+  .text-large {
+    font-size: 1.125rem;
+    line-height: 1.7;
   }
 }
 

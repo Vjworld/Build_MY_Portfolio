@@ -2,13 +2,13 @@ import { Award, ExternalLink } from "lucide-react";
 
 export default function ProductHuntSection() {
   return (
-    <section id="product-hunt" className="py-20 bg-gradient-to-br from-background via-professional-light to-gold-light/10 relative overflow-hidden">
+    <section id="product-hunt" className="py-20 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 relative overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute top-10 right-10 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-10 left-10 w-32 h-32 bg-achievement/10 rounded-full blur-2xl"></div>
+      <div className="absolute top-10 right-10 w-40 h-40 bg-gradient-to-r from-gold/20 to-yellow-400/20 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-10 left-10 w-32 h-32 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-2xl"></div>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 relative z-10">
-          <div className="achievement-badge mx-auto mb-6">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-gold/20 to-yellow-400/20 border border-gold/30 text-gold mb-6 font-semibold text-sm">
             <Award className="h-4 w-4 mr-2" />
             Featured Products
           </div>
@@ -16,11 +16,11 @@ export default function ProductHuntSection() {
             <div className="p-3 bg-gradient-gold rounded-xl shadow-lg">
               <Award className="h-8 w-8 text-professional" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold premium-gradient">
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
               Featured on Product Hunt
             </h2>
           </div>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto font-inter">
             Our innovative products have been recognized by the Product Hunt community, 
             showcasing cutting-edge solutions in AI, automation, and business tools.
           </p>
@@ -31,8 +31,8 @@ export default function ProductHuntSection() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-6">
               <div className="text-center md:text-left">
-                <h3 className="text-2xl font-bold text-foreground mb-4">QR Generator Pro</h3>
-                <p className="text-muted-foreground mb-6">
+                <h3 className="text-2xl font-bold text-white mb-4">QR Generator Pro</h3>
+                <p className="text-gray-300 mb-6 font-inter">
                   Create and share QR codes instantly with our professional QR code generator. 
                   Advanced customization options, bulk generation, and analytics tracking.
                 </p>
