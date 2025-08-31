@@ -120,7 +120,7 @@ export default function YouTubeVideosSection() {
               Stay updated with our latest product launches and feature demonstrations.
             </p>
             <a
-              href="https://www.youtube.com/@RuvabIT"
+              href="https://www.youtube.com/playlist?list=PLLhAtB6jd8XeoagMizKVS2RpUQmCxCEP-"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 achievement-highlight"
