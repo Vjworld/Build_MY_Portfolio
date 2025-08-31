@@ -4,24 +4,24 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(220, 13%, 8%);
-  --foreground: hsl(220, 9%, 96%);
-  --card: hsl(220, 11%, 11%);
-  --card-foreground: hsl(220, 9%, 96%);
-  --popover: hsl(220, 11%, 11%);
-  --popover-foreground: hsl(220, 9%, 96%);
-  --primary: hsl(220, 13%, 16%);
-  --primary-foreground: hsl(220, 9%, 96%);
-  --secondary: hsl(215, 25%, 25%);
-  --secondary-foreground: hsl(220, 9%, 96%);
-  --muted: hsl(220, 9%, 15%);
-  --muted-foreground: hsl(220, 6%, 68%);
+  --background: hsl(220, 15%, 12%);
+  --foreground: hsl(220, 9%, 98%);
+  --card: hsl(220, 11%, 15%);
+  --card-foreground: hsl(220, 9%, 98%);
+  --popover: hsl(220, 11%, 15%);
+  --popover-foreground: hsl(220, 9%, 98%);
+  --primary: hsl(220, 13%, 20%);
+  --primary-foreground: hsl(220, 9%, 98%);
+  --secondary: hsl(215, 25%, 30%);
+  --secondary-foreground: hsl(220, 9%, 98%);
+  --muted: hsl(220, 9%, 18%);
+  --muted-foreground: hsl(220, 6%, 75%);
   --accent: hsl(35, 100%, 55%);
   --accent-foreground: hsl(220, 13%, 8%);
   --destructive: hsl(0, 75%, 60%);
-  --destructive-foreground: hsl(220, 9%, 96%);
-  --border: hsl(220, 9%, 18%);
-  --input: hsl(220, 9%, 15%);
+  --destructive-foreground: hsl(220, 9%, 98%);
+  --border: hsl(220, 9%, 22%);
+  --input: hsl(220, 9%, 18%);
   --ring: hsl(35, 100%, 55%);
   --chart-1: hsl(203.8863, 88.2845%, 53.1373%);
   --chart-2: hsl(159.7826, 100%, 36.0784%);
@@ -101,10 +101,11 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply antialiased;
     font-family: var(--font-inter);
     min-height: 100vh;
-    background: var(--background);
+    background: hsl(220, 15%, 12%) !important;
+    color: hsl(220, 9%, 98%) !important;
     scroll-behavior: smooth;
   }
 
@@ -113,7 +114,7 @@
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.1;
-    color: var(--foreground);
+    color: hsl(220, 9%, 98%) !important;
   }
   
   h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
@@ -125,13 +126,36 @@
     font-weight: 400;
     line-height: 1.7;
     letter-spacing: -0.005em;
-    color: var(--muted-foreground);
+    color: hsl(220, 6%, 75%) !important;
   }
   
   .text-large {
     font-size: 1.25rem;
     line-height: 1.8;
     font-weight: 500;
+    color: hsl(220, 6%, 75%) !important;
+  }
+  
+  /* Force text visibility */
+  .text-foreground {
+    color: hsl(220, 9%, 98%) !important;
+  }
+  
+  .text-muted-foreground {
+    color: hsl(220, 6%, 75%) !important;
+  }
+  
+  .text-accent {
+    color: hsl(35, 100%, 55%) !important;
+  }
+  
+  /* Ensure all text is visible */
+  * {
+    color: inherit;
+  }
+  
+  span, div, a, button {
+    color: inherit;
   }
 }
 
