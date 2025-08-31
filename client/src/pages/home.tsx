@@ -6,6 +6,7 @@ import CertificationsSection from "@/components/portfolio/certifications-section
 import ProjectsSection from "@/components/portfolio/projects-section";
 import SkillsSection from "@/components/portfolio/skills-section";
 import SocialLinksSection from "@/components/portfolio/social-links-section";
+import AffiliatePartnersSection from "@/components/portfolio/affiliate-partners-section";
 import ProductHuntSection from "@/components/portfolio/product-hunt-section";
 import YouTubeVideosSection from "@/components/portfolio/youtube-videos-section";
 import TestimonialsSection from "@/components/portfolio/testimonials-section";
@@ -27,6 +28,7 @@ export default function Home() {
         <ProjectsSection />
         <SkillsSection />
         <SocialLinksSection />
+        <AffiliatePartnersSection />
         <ProductHuntSection />
         <YouTubeVideosSection />
         <TestimonialsSection />
