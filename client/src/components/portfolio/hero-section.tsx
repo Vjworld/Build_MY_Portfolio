@@ -75,7 +75,7 @@ export default function HeroSection() {
               
               <div className="relative card-elevated p-8 rounded-full shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                  src="@assets/vs_1756632353606.jpg" 
                   alt="Vaibhav Selukar professional headshot" 
                   className="relative w-96 h-96 rounded-full object-cover shadow-2xl border-4 border-accent/30 group-hover:border-accent/70 transition-all duration-500" 
                   data-testid="img-hero-profile"
