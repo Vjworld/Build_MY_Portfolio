@@ -1,12 +1,12 @@
 export default function AboutSection() {
   const skills = [
-    { name: "Project Management", category: "primary" },
-    { name: "Automation", category: "secondary" },
+    { name: "Project Management", category: "accent" },
+    { name: "Automation", category: "accent" },
     { name: "Process Optimization", category: "accent" },
     { name: "Agile Methodology", category: "muted" },
     { name: "Team Leadership", category: "primary" },
     { name: "Strategic Planning", category: "secondary" },
-    { name: "Cybersecurity", category: "accent" },
+    { name: "Cybersecurity", category: "muted" },
     { name: "AI Integration", category: "muted" },
     { name: "Digital Transformation", category: "primary" },
   ];
@@ -27,14 +27,18 @@ export default function AboutSection() {
   };
 
   return (
-    <section id="portfolio" className="section-padding bg-gradient-to-b from-background via-primary/5 to-background">
+    <section
+      id="portfolio"
+      className="section-padding bg-gradient-to-b from-background via-primary/5 to-background"
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
           <h2 className="gradient-text text-5xl lg:text-6xl font-playfair font-bold mb-6">
             Who I Am and What I Do
           </h2>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-inter">
-            Transforming businesses through innovative technology solutions and strategic leadership
+            Transforming businesses through innovative technology solutions and
+            strategic leadership
           </p>
         </div>
 
@@ -46,19 +50,35 @@ export default function AboutSection() {
                   Professional Journey
                 </h3>
                 <p className="text-muted-foreground leading-relaxed text-large">
-                  As a Senior Business Leader at AI Wonders Professional and a Sr. Cybersecurity Consultant at Project Management Office Lead, 
-                  I bring together deep technical expertise with strategic business acumen to drive digital transformation initiatives.
+                  As a Senior Business Leader, a Professional Sr. Consultant,
+                  and a Project Management Office Lead, I bring together deep
+                  technical expertise with strategic business acumen to drive
+                  digital transformation initiatives.
                 </p>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-8">
-                <div className="text-center card-elevated p-8" data-testid="stat-experience">
-                  <div className="text-5xl font-bold gradient-text mb-4">18+</div>
-                  <div className="text-base text-muted-foreground font-semibold">Years Experience</div>
+                <div
+                  className="text-center card-elevated p-8"
+                  data-testid="stat-experience"
+                >
+                  <div className="text-5xl font-bold gradient-text mb-4">
+                    18+
+                  </div>
+                  <div className="text-base text-muted-foreground font-semibold">
+                    Years Experience
+                  </div>
                 </div>
-                <div className="text-center card-elevated p-8" data-testid="stat-projects">
-                  <div className="text-5xl font-bold gradient-text mb-4">70+</div>
-                  <div className="text-base text-muted-foreground font-semibold">Projects Completed</div>
+                <div
+                  className="text-center card-elevated p-8"
+                  data-testid="stat-projects"
+                >
+                  <div className="text-5xl font-bold gradient-text mb-4">
+                    10+
+                  </div>
+                  <div className="text-base text-muted-foreground font-semibold">
+                    Projects Completed
+                  </div>
                 </div>
               </div>
             </div>
@@ -72,21 +92,33 @@ export default function AboutSection() {
               <div className="space-y-4">
                 <div className="flex flex-wrap gap-3">
                   {skills.slice(0, 3).map((skill, index) => (
-                    <span key={index} className={getSkillClasses(skill.category)} data-testid={`skill-${skill.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <span
+                      key={index}
+                      className={getSkillClasses(skill.category)}
+                      data-testid={`skill-${skill.name.toLowerCase().replace(/\s+/g, "-")}`}
+                    >
                       {skill.name}
                     </span>
                   ))}
                 </div>
                 <div className="flex flex-wrap gap-3">
                   {skills.slice(3, 6).map((skill, index) => (
-                    <span key={index} className={getSkillClasses(skill.category)} data-testid={`skill-${skill.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <span
+                      key={index}
+                      className={getSkillClasses(skill.category)}
+                      data-testid={`skill-${skill.name.toLowerCase().replace(/\s+/g, "-")}`}
+                    >
                       {skill.name}
                     </span>
                   ))}
                 </div>
                 <div className="flex flex-wrap gap-3">
                   {skills.slice(6, 9).map((skill, index) => (
-                    <span key={index} className={getSkillClasses(skill.category)} data-testid={`skill-${skill.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <span
+                      key={index}
+                      className={getSkillClasses(skill.category)}
+                      data-testid={`skill-${skill.name.toLowerCase().replace(/\s+/g, "-")}`}
+                    >
                       {skill.name}
                     </span>
                   ))}
