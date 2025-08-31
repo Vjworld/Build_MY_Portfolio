@@ -2,14 +2,21 @@ import { Award, ExternalLink } from "lucide-react";
 
 export default function ProductHuntSection() {
   return (
-    <section id="product-hunt" className="py-20 bg-gradient-to-br from-background to-secondary/5">
+    <section id="product-hunt" className="py-20 bg-gradient-to-br from-background via-professional-light to-gold-light/10 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-10 right-10 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-10 left-10 w-32 h-32 bg-achievement/10 rounded-full blur-2xl"></div>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 relative z-10">
+          <div className="achievement-badge mx-auto mb-6">
+            <Award className="h-4 w-4 mr-2" />
+            Featured Products
+          </div>
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="p-3 bg-primary/10 rounded-xl">
-              <Award className="h-8 w-8 text-primary" />
+            <div className="p-3 bg-gradient-gold rounded-xl shadow-lg">
+              <Award className="h-8 w-8 text-professional" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold premium-gradient">
               Featured on Product Hunt
             </h2>
           </div>
@@ -48,34 +55,38 @@ export default function ProductHuntSection() {
               </div>
             </div>
             <div className="flex justify-center">
-              <iframe 
-                style={{ border: "none" }} 
-                src="https://cards.producthunt.com/cards/products/1101960" 
-                width="500" 
-                height="405" 
-                frameBorder="0" 
-                scrolling="no" 
-                allowFullScreen
-                title="QR Generator Pro Product Hunt Card"
-                className="rounded-lg shadow-lg max-w-full"
-              />
+              <div className="professional-card p-4 achievement-highlight">
+                <iframe 
+                  style={{ border: "none" }} 
+                  src="https://cards.producthunt.com/cards/products/1101960" 
+                  width="500" 
+                  height="405" 
+                  frameBorder="0" 
+                  scrolling="no" 
+                  allowFullScreen
+                  title="QR Generator Pro Product Hunt Card"
+                  className="rounded-lg max-w-full"
+                />
+              </div>
             </div>
           </div>
 
           {/* TrendSolver */}
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="order-2 md:order-1 flex justify-center">
-              <iframe 
-                style={{ border: "none" }} 
-                src="https://cards.producthunt.com/cards/products/1101749" 
-                width="500" 
-                height="405" 
-                frameBorder="0" 
-                scrolling="no" 
-                allowFullScreen
-                title="TrendSolver Product Hunt Card"
-                className="rounded-lg shadow-lg max-w-full"
-              />
+              <div className="professional-card p-4 achievement-highlight">
+                <iframe 
+                  style={{ border: "none" }} 
+                  src="https://cards.producthunt.com/cards/products/1101749" 
+                  width="500" 
+                  height="405" 
+                  frameBorder="0" 
+                  scrolling="no" 
+                  allowFullScreen
+                  title="TrendSolver Product Hunt Card"
+                  className="rounded-lg max-w-full"
+                />
+              </div>
             </div>
             <div className="order-1 md:order-2 space-y-6">
               <div className="text-center md:text-left">
@@ -132,34 +143,38 @@ export default function ProductHuntSection() {
               </div>
             </div>
             <div className="flex justify-center">
-              <iframe 
-                style={{ border: "none" }} 
-                src="https://cards.producthunt.com/cards/products/1101945" 
-                width="500" 
-                height="405" 
-                frameBorder="0" 
-                scrolling="no" 
-                allowFullScreen
-                title="FYPPAL Product Hunt Card"
-                className="rounded-lg shadow-lg max-w-full"
-              />
+              <div className="professional-card p-4 achievement-highlight">
+                <iframe 
+                  style={{ border: "none" }} 
+                  src="https://cards.producthunt.com/cards/products/1101945" 
+                  width="500" 
+                  height="405" 
+                  frameBorder="0" 
+                  scrolling="no" 
+                  allowFullScreen
+                  title="FYPPAL Product Hunt Card"
+                  className="rounded-lg max-w-full"
+                />
+              </div>
             </div>
           </div>
 
           {/* LangScribe */}
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="order-2 md:order-1 flex justify-center">
-              <iframe 
-                style={{ border: "none" }} 
-                src="https://cards.producthunt.com/cards/products/1101355" 
-                width="500" 
-                height="405" 
-                frameBorder="0" 
-                scrolling="no" 
-                allowFullScreen
-                title="LangScribe Product Hunt Card"
-                className="rounded-lg shadow-lg max-w-full"
-              />
+              <div className="professional-card p-4 achievement-highlight">
+                <iframe 
+                  style={{ border: "none" }} 
+                  src="https://cards.producthunt.com/cards/products/1101355" 
+                  width="500" 
+                  height="405" 
+                  frameBorder="0" 
+                  scrolling="no" 
+                  allowFullScreen
+                  title="LangScribe Product Hunt Card"
+                  className="rounded-lg max-w-full"
+                />
+              </div>
             </div>
             <div className="order-1 md:order-2 space-y-6">
               <div className="text-center md:text-left">
@@ -190,9 +205,9 @@ export default function ProductHuntSection() {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="bg-primary/5 rounded-2xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-xl font-semibold text-foreground mb-4">
+        <div className="text-center mt-16 relative z-10">
+          <div className="professional-card bg-gradient-to-br from-gold-light/20 to-achievement-light/10 p-8 max-w-2xl mx-auto achievement-highlight">
+            <h3 className="text-xl font-semibold premium-gradient mb-4">
               Explore Our Products
             </h3>
             <p className="text-muted-foreground mb-6">
@@ -202,7 +217,7 @@ export default function ProductHuntSection() {
               href="https://ruvab.it.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center gap-2 bg-gradient-gold text-professional px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
               data-testid="button-visit-ruvab"
             >
               Visit Ruvab IT

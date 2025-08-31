@@ -42,14 +42,21 @@ const videos: VideoData[] = [
 
 export default function YouTubeVideosSection() {
   return (
-    <section id="product-videos" className="py-20 bg-background">
+    <section id="product-videos" className="py-20 bg-gradient-to-br from-background via-achievement-light/5 to-red-50/20 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-20 left-20 w-40 h-40 bg-red-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 right-20 w-32 h-32 bg-achievement/10 rounded-full blur-2xl"></div>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 relative z-10">
+          <div className="achievement-badge mx-auto mb-6 bg-red-500 text-white">
+            <Play className="h-4 w-4 mr-2" />
+            Video Showcase
+          </div>
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="p-3 bg-red-500/10 rounded-xl">
-              <Youtube className="h-8 w-8 text-red-500" />
+            <div className="p-3 bg-gradient-to-br from-red-500 to-red-600 rounded-xl shadow-lg">
+              <Youtube className="h-8 w-8 text-white" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold premium-gradient">
               Product Launch Videos
             </h2>
           </div>
@@ -63,7 +70,7 @@ export default function YouTubeVideosSection() {
           {videos.map((video, index) => (
             <div 
               key={index}
-              className="bg-card rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group"
+              className="professional-card overflow-hidden group achievement-highlight"
             >
               <div className="relative aspect-[9/16] bg-gray-100">
                 <iframe
@@ -101,11 +108,11 @@ export default function YouTubeVideosSection() {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="bg-red-500/5 rounded-2xl p-8 max-w-2xl mx-auto border border-red-500/10">
+        <div className="text-center mt-16 relative z-10">
+          <div className="professional-card bg-gradient-to-br from-red-500/10 to-achievement/10 p-8 max-w-2xl mx-auto achievement-highlight border-2 border-red-500/20">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Youtube className="h-6 w-6 text-red-500" />
-              <h3 className="text-xl font-semibold text-foreground">
+              <h3 className="text-xl font-semibold premium-gradient">
                 Subscribe for More Updates
               </h3>
             </div>
@@ -116,7 +123,7 @@ export default function YouTubeVideosSection() {
               href="https://www.youtube.com/@RuvabIT"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-red-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 achievement-highlight"
               data-testid="button-youtube-subscribe"
             >
               <Youtube className="h-4 w-4" />
