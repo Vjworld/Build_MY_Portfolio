@@ -14,6 +14,7 @@ import {
   skills,
   achievements,
   education,
+  socialLinks,
   type User,
   type UpsertUser,
   type PortfolioSection,
@@ -44,6 +45,8 @@ import {
   type InsertAchievement,
   type Education,
   type InsertEducation,
+  type SocialLink,
+  type InsertSocialLink,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, like, sql } from "drizzle-orm";
@@ -141,6 +144,14 @@ export interface IStorage {
   createEducation(education: InsertEducation): Promise<Education>;
   updateEducation(id: string, education: Partial<InsertEducation>): Promise<Education>;
   deleteEducation(id: string): Promise<void>;
+
+  // Social Links
+  getSocialLinks(): Promise<SocialLink[]>;
+  getSocialLinksByCategory(): Promise<Record<string, SocialLink[]>>;
+  getFeaturedSocialLinks(): Promise<SocialLink[]>;
+  createSocialLink(socialLink: InsertSocialLink): Promise<SocialLink>;
+  updateSocialLink(id: string, socialLink: Partial<InsertSocialLink>): Promise<SocialLink>;
+  deleteSocialLink(id: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -635,6 +646,55 @@ export class DatabaseStorage implements IStorage {
 
   async deleteEducation(id: string): Promise<void> {
     await db.delete(education).where(eq(education.id, id));
+  }
+
+  // Social Links
+  async getSocialLinks(): Promise<SocialLink[]> {
+    return await db
+      .select()
+      .from(socialLinks)
+      .where(eq(socialLinks.isVisible, true))
+      .orderBy(socialLinks.category, socialLinks.sortOrder);
+  }
+
+  async getSocialLinksByCategory(): Promise<Record<string, SocialLink[]>> {
+    const allLinks = await this.getSocialLinks();
+    return allLinks.reduce((acc, link) => {
+      if (!acc[link.category]) {
+        acc[link.category] = [];
+      }
+      acc[link.category].push(link);
+      return acc;
+    }, {} as Record<string, SocialLink[]>);
+  }
+
+  async getFeaturedSocialLinks(): Promise<SocialLink[]> {
+    return await db
+      .select()
+      .from(socialLinks)
+      .where(and(eq(socialLinks.isVisible, true), eq(socialLinks.isFeatured, true)))
+      .orderBy(socialLinks.category, socialLinks.sortOrder);
+  }
+
+  async createSocialLink(socialLinkData: InsertSocialLink): Promise<SocialLink> {
+    const [newSocialLink] = await db
+      .insert(socialLinks)
+      .values(socialLinkData)
+      .returning();
+    return newSocialLink;
+  }
+
+  async updateSocialLink(id: string, socialLinkData: Partial<InsertSocialLink>): Promise<SocialLink> {
+    const [updatedSocialLink] = await db
+      .update(socialLinks)
+      .set({ ...socialLinkData, updatedAt: new Date() })
+      .where(eq(socialLinks.id, id))
+      .returning();
+    return updatedSocialLink;
+  }
+
+  async deleteSocialLink(id: string): Promise<void> {
+    await db.delete(socialLinks).where(eq(socialLinks.id, id));
   }
 }
 

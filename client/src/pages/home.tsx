@@ -5,6 +5,7 @@ import ExperienceSection from "@/components/portfolio/experience-section";
 import CertificationsSection from "@/components/portfolio/certifications-section";
 import ProjectsSection from "@/components/portfolio/projects-section";
 import SkillsSection from "@/components/portfolio/skills-section";
+import SocialLinksSection from "@/components/portfolio/social-links-section";
 import TestimonialsSection from "@/components/portfolio/testimonials-section";
 import BlogSection from "@/components/blog/blog-section";
 import CommunitySection from "@/components/community/community-section";
@@ -23,6 +24,7 @@ export default function Home() {
         <CertificationsSection />
         <ProjectsSection />
         <SkillsSection />
+        <SocialLinksSection />
         <TestimonialsSection />
         <BlogSection />
         <CommunitySection />

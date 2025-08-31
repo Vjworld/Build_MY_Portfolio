@@ -525,6 +525,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Social Links routes
+  app.get('/api/social-links', async (req, res) => {
+    try {
+      const socialLinks = req.query.featured === 'true'
+        ? await storage.getFeaturedSocialLinks()
+        : req.query.byCategory === 'true'
+        ? await storage.getSocialLinksByCategory()
+        : await storage.getSocialLinks();
+      res.json(socialLinks);
+    } catch (error) {
+      console.error('Error fetching social links:', error);
+      res.status(500).json({ error: 'Failed to fetch social links' });
+    }
+  });
+
+  app.post('/api/social-links', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const socialLink = await storage.createSocialLink(req.body);
+      res.json(socialLink);
+    } catch (error) {
+      console.error('Error creating social link:', error);
+      res.status(500).json({ error: 'Failed to create social link' });
+    }
+  });
+
+  app.put('/api/social-links/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { id } = req.params;
+      const socialLink = await storage.updateSocialLink(id, req.body);
+      res.json(socialLink);
+    } catch (error) {
+      console.error('Error updating social link:', error);
+      res.status(500).json({ error: 'Failed to update social link' });
+    }
+  });
+
+  app.delete('/api/social-links/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { id } = req.params;
+      await storage.deleteSocialLink(id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error deleting social link:', error);
+      res.status(500).json({ error: 'Failed to delete social link' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

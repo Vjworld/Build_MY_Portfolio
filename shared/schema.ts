@@ -255,6 +255,23 @@ export const education = pgTable("education", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Social links table
+export const socialLinks = pgTable("social_links", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  platform: varchar("platform").notNull(), // LinkedIn, YouTube, Twitter, etc.
+  url: varchar("url").notNull(),
+  username: varchar("username"),
+  displayName: varchar("display_name"),
+  category: varchar("category").notNull(), // Professional, Social, Portfolio, Tools, etc.
+  description: text("description"),
+  icon: varchar("icon"), // Icon name for display
+  isVisible: boolean("is_visible").default(true),
+  isFeatured: boolean("is_featured").default(false),
+  sortOrder: integer("sort_order").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   blogPosts: many(blogPosts),
@@ -328,6 +345,10 @@ export const educationRelations = relations(education, ({ one }) => ({
 }));
 
 export const employmentExperienceRelations = relations(employmentExperience, ({ one }) => ({
+  // Add relations if needed
+}));
+
+export const socialLinksRelations = relations(socialLinks, ({ one }) => ({
   // Add relations if needed
 }));
 
@@ -451,3 +472,11 @@ export const insertEducationSchema = createInsertSchema(education).omit({
 });
 export type InsertEducation = z.infer<typeof insertEducationSchema>;
 export type Education = typeof education.$inferSelect;
+
+export const insertSocialLinkSchema = createInsertSchema(socialLinks).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertSocialLink = z.infer<typeof insertSocialLinkSchema>;
+export type SocialLink = typeof socialLinks.$inferSelect;
