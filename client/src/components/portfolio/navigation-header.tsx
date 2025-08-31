@@ -29,6 +29,9 @@ export default function NavigationHeader() {
             <a href="#portfolio" className="text-foreground hover:text-primary transition-colors" data-testid="link-portfolio">
               Portfolio
             </a>
+            <a href="#product-hunt" className="text-foreground hover:text-primary transition-colors" data-testid="link-products">
+              Products
+            </a>
             <a href="#blog" className="text-foreground hover:text-primary transition-colors" data-testid="link-blog">
               Blog
             </a>
@@ -99,6 +102,9 @@ export default function NavigationHeader() {
             <div className="flex flex-col space-y-4">
               <a href="#portfolio" className="text-foreground hover:text-primary transition-colors">
                 Portfolio
+              </a>
+              <a href="#product-hunt" className="text-foreground hover:text-primary transition-colors">
+                Products
               </a>
               <a href="#blog" className="text-foreground hover:text-primary transition-colors">
                 Blog
