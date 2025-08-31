@@ -1,15 +1,21 @@
 export default function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Rahul Sharma",
-      title: "Founder and CEO, TechVenture",
-      content: "We employed Vaibhav's consulting services at TechVenture, and collectively M.E is outstanding understanding and managing our PMO structure. His excellence technical and business leadership capabilities have been one of our core reasons for impressive success.",
+      name: "Praful Lichade",
+      title: "Founder and CEO, Pragmatyc",
+      content: "I've witnessed Vaibhav's incredible journey at Pragmatyc, from Associate BA to successfully establishing and managing the PMO function. He's a proactive leader who excels in initiating processes, defining strategies, and ensuring operational adherence. In his previous role as a Senior Business Analyst, Vaibhav's probing skills and meticulous documentation made significant contributions to our projects. He's a true asset, consistently driving success from inception.",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&h=150",
     },
     {
-      name: "Sarah Chen",
-      title: "CTO, InnovateSolutions",
-      content: "Vaibhav's strategic thinking and technical expertise have been instrumental in our digital transformation journey. His ability to translate complex technical concepts into actionable business strategies is remarkable.",
+      name: "Vikrant Salpekar",
+      title: "Co-founder and Director, RightZero Solutions Pvt. Ltd.",
+      content: "I had the privilege of collaborating with Vaibhav and I am consistently impressed by his focused and straightforward approach. His exceptional strategic planning skills were evident in every task we worked on together. What truly sets Vaibhav apart is his keen eye for details. Vaibhav meticulously analyzes each aspect of our initiatives, ensuring nothing is overlooked. His dedication to precision greatly contributes to our team's achievements. I wholeheartedly endorse Vaibhav for his exceptional ability to combine strategic thinking with an unwavering attention to detail.",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&h=150",
+    },
+    {
+      name: "Aaswad Waghmare",
+      title: "Senior Delivery Manager - Projects & Programs | Product Engineering & Implementations | Agile Leader | Coach & Mentor",
+      content: "Vaibhav is very focused professional who makes sure that the given tasks are being executed no matter what. When it comes to following processes he is very particular at it, if not being followed, help others understand the consequences in the most effective manner. He is a firm believer of giving the best in any given situation and it was evident from the results he produced at MAXIMESS. I wish him all the best for PMO journey!",
       avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&h=150",
     },
   ];
@@ -26,7 +32,7 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <div 
               key={index} 
