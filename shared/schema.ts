@@ -8,6 +8,7 @@ import {
   text,
   boolean,
   integer,
+  date,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -141,6 +142,119 @@ export const contactMessages = pgTable("contact_messages", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Employment experience table
+export const employmentExperience = pgTable("employment_experience", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  company: varchar("company").notNull(),
+  position: varchar("position").notNull(),
+  location: varchar("location"),
+  startDate: date("start_date").notNull(),
+  endDate: date("end_date"),
+  isCurrent: boolean("is_current").default(false),
+  description: text("description"),
+  achievements: text("achievements").array(),
+  technologies: text("technologies").array(),
+  responsibilities: text("responsibilities").array(),
+  domain: varchar("domain"), // Banking, SaaS, etc.
+  sortOrder: integer("sort_order").default(0),
+  isVisible: boolean("is_visible").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Projects table
+export const projects = pgTable("projects", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: varchar("title").notNull(),
+  description: text("description"),
+  company: varchar("company"),
+  client: varchar("client"),
+  domain: varchar("domain"), // Banking, EduTech, etc.
+  technologies: text("technologies").array(),
+  methodology: varchar("methodology"), // Agile, Scrum, etc.
+  teamSize: varchar("team_size"),
+  duration: varchar("duration"),
+  role: varchar("role"),
+  achievements: text("achievements").array(),
+  challenges: text("challenges").array(),
+  outcomes: text("outcomes").array(),
+  startDate: date("start_date"),
+  endDate: date("end_date"),
+  isVisible: boolean("is_visible").default(true),
+  isFeatured: boolean("is_featured").default(false),
+  sortOrder: integer("sort_order").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Certifications table
+export const certifications = pgTable("certifications", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  provider: varchar("provider").notNull(),
+  credentialId: varchar("credential_id"),
+  credentialUrl: varchar("credential_url"),
+  issueDate: date("issue_date"),
+  expiryDate: date("expiry_date"),
+  description: text("description"),
+  skills: text("skills").array(),
+  badgeUrl: varchar("badge_url"),
+  isVisible: boolean("is_visible").default(true),
+  isFeatured: boolean("is_featured").default(false),
+  sortOrder: integer("sort_order").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Skills and technologies table
+export const skills = pgTable("skills", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  category: varchar("category").notNull(), // Technical, Soft Skills, Tools, etc.
+  proficiencyLevel: integer("proficiency_level").default(1), // 1-5 scale
+  yearsOfExperience: integer("years_of_experience"),
+  description: text("description"),
+  isVisible: boolean("is_visible").default(true),
+  isFeatured: boolean("is_featured").default(false),
+  sortOrder: integer("sort_order").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Awards and achievements table
+export const achievements = pgTable("achievements", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: varchar("title").notNull(),
+  description: text("description"),
+  organization: varchar("organization"),
+  year: integer("year"),
+  category: varchar("category"), // Award, Recognition, etc.
+  impact: text("impact"),
+  isVisible: boolean("is_visible").default(true),
+  isFeatured: boolean("is_featured").default(false),
+  sortOrder: integer("sort_order").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Education table
+export const education = pgTable("education", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  institution: varchar("institution").notNull(),
+  degree: varchar("degree").notNull(),
+  field: varchar("field"),
+  location: varchar("location"),
+  startDate: date("start_date"),
+  endDate: date("end_date"),
+  grade: varchar("grade"),
+  description: text("description"),
+  achievements: text("achievements").array(),
+  isVisible: boolean("is_visible").default(true),
+  sortOrder: integer("sort_order").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   blogPosts: many(blogPosts),
@@ -190,6 +304,31 @@ export const forumRepliesRelations = relations(forumReplies, ({ one }) => ({
     fields: [forumReplies.authorId],
     references: [users.id],
   }),
+}));
+
+// Professional data relations
+export const projectsRelations = relations(projects, ({ one }) => ({
+  // Add relations if needed
+}));
+
+export const certificationsRelations = relations(certifications, ({ one }) => ({
+  // Add relations if needed
+}));
+
+export const skillsRelations = relations(skills, ({ one }) => ({
+  // Add relations if needed
+}));
+
+export const achievementsRelations = relations(achievements, ({ one }) => ({
+  // Add relations if needed
+}));
+
+export const educationRelations = relations(education, ({ one }) => ({
+  // Add relations if needed
+}));
+
+export const employmentExperienceRelations = relations(employmentExperience, ({ one }) => ({
+  // Add relations if needed
 }));
 
 // Schema types
@@ -263,3 +402,52 @@ export const insertContactMessageSchema = createInsertSchema(contactMessages).om
 });
 export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
 export type ContactMessage = typeof contactMessages.$inferSelect;
+
+// Professional data schemas
+export const insertEmploymentExperienceSchema = createInsertSchema(employmentExperience).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertEmploymentExperience = z.infer<typeof insertEmploymentExperienceSchema>;
+export type EmploymentExperience = typeof employmentExperience.$inferSelect;
+
+export const insertProjectSchema = createInsertSchema(projects).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertProject = z.infer<typeof insertProjectSchema>;
+export type Project = typeof projects.$inferSelect;
+
+export const insertCertificationSchema = createInsertSchema(certifications).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertCertification = z.infer<typeof insertCertificationSchema>;
+export type Certification = typeof certifications.$inferSelect;
+
+export const insertSkillSchema = createInsertSchema(skills).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertSkill = z.infer<typeof insertSkillSchema>;
+export type Skill = typeof skills.$inferSelect;
+
+export const insertAchievementSchema = createInsertSchema(achievements).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertAchievement = z.infer<typeof insertAchievementSchema>;
+export type Achievement = typeof achievements.$inferSelect;
+
+export const insertEducationSchema = createInsertSchema(education).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertEducation = z.infer<typeof insertEducationSchema>;
+export type Education = typeof education.$inferSelect;

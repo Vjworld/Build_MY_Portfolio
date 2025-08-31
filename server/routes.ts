@@ -430,6 +430,101 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Professional Data Routes
+  
+  // Employment Experience routes
+  app.get('/api/employment-experience', async (req, res) => {
+    try {
+      const experience = await storage.getEmploymentExperience();
+      res.json(experience);
+    } catch (error) {
+      console.error('Error fetching employment experience:', error);
+      res.status(500).json({ error: 'Failed to fetch employment experience' });
+    }
+  });
+
+  app.post('/api/employment-experience', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const experience = await storage.createEmploymentExperience(req.body);
+      res.json(experience);
+    } catch (error) {
+      console.error('Error creating employment experience:', error);
+      res.status(500).json({ error: 'Failed to create employment experience' });
+    }
+  });
+
+  // Projects routes
+  app.get('/api/projects', async (req, res) => {
+    try {
+      const projects = req.query.featured === 'true' 
+        ? await storage.getFeaturedProjects()
+        : await storage.getProjects();
+      res.json(projects);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+      res.status(500).json({ error: 'Failed to fetch projects' });
+    }
+  });
+
+  // Certifications routes
+  app.get('/api/certifications', async (req, res) => {
+    try {
+      const certifications = req.query.featured === 'true'
+        ? await storage.getFeaturedCertifications()
+        : await storage.getCertifications();
+      res.json(certifications);
+    } catch (error) {
+      console.error('Error fetching certifications:', error);
+      res.status(500).json({ error: 'Failed to fetch certifications' });
+    }
+  });
+
+  // Skills routes
+  app.get('/api/skills', async (req, res) => {
+    try {
+      const skills = req.query.featured === 'true'
+        ? await storage.getFeaturedSkills()
+        : req.query.byCategory === 'true'
+        ? await storage.getSkillsByCategory()
+        : await storage.getSkills();
+      res.json(skills);
+    } catch (error) {
+      console.error('Error fetching skills:', error);
+      res.status(500).json({ error: 'Failed to fetch skills' });
+    }
+  });
+
+  // Achievements routes
+  app.get('/api/achievements', async (req, res) => {
+    try {
+      const achievements = req.query.featured === 'true'
+        ? await storage.getFeaturedAchievements()
+        : await storage.getAchievements();
+      res.json(achievements);
+    } catch (error) {
+      console.error('Error fetching achievements:', error);
+      res.status(500).json({ error: 'Failed to fetch achievements' });
+    }
+  });
+
+  // Education routes
+  app.get('/api/education', async (req, res) => {
+    try {
+      const education = await storage.getEducation();
+      res.json(education);
+    } catch (error) {
+      console.error('Error fetching education:', error);
+      res.status(500).json({ error: 'Failed to fetch education' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

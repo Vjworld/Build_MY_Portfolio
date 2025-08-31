@@ -8,6 +8,12 @@ import {
   contests,
   faqs,
   contactMessages,
+  employmentExperience,
+  projects,
+  certifications,
+  skills,
+  achievements,
+  education,
   type User,
   type UpsertUser,
   type PortfolioSection,
@@ -26,6 +32,18 @@ import {
   type InsertFaq,
   type ContactMessage,
   type InsertContactMessage,
+  type EmploymentExperience,
+  type InsertEmploymentExperience,
+  type Project,
+  type InsertProject,
+  type Certification,
+  type InsertCertification,
+  type Skill,
+  type InsertSkill,
+  type Achievement,
+  type InsertAchievement,
+  type Education,
+  type InsertEducation,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, like, sql } from "drizzle-orm";
@@ -81,6 +99,48 @@ export interface IStorage {
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
   getContactMessages(): Promise<ContactMessage[]>;
   markContactMessageAsRead(id: string): Promise<void>;
+
+  // Professional data operations
+  // Employment Experience
+  getEmploymentExperience(): Promise<EmploymentExperience[]>;
+  createEmploymentExperience(experience: InsertEmploymentExperience): Promise<EmploymentExperience>;
+  updateEmploymentExperience(id: string, experience: Partial<InsertEmploymentExperience>): Promise<EmploymentExperience>;
+  deleteEmploymentExperience(id: string): Promise<void>;
+
+  // Projects
+  getProjects(): Promise<Project[]>;
+  getFeaturedProjects(): Promise<Project[]>;
+  createProject(project: InsertProject): Promise<Project>;
+  updateProject(id: string, project: Partial<InsertProject>): Promise<Project>;
+  deleteProject(id: string): Promise<void>;
+
+  // Certifications
+  getCertifications(): Promise<Certification[]>;
+  getFeaturedCertifications(): Promise<Certification[]>;
+  createCertification(certification: InsertCertification): Promise<Certification>;
+  updateCertification(id: string, certification: Partial<InsertCertification>): Promise<Certification>;
+  deleteCertification(id: string): Promise<void>;
+
+  // Skills
+  getSkills(): Promise<Skill[]>;
+  getSkillsByCategory(): Promise<Record<string, Skill[]>>;
+  getFeaturedSkills(): Promise<Skill[]>;
+  createSkill(skill: InsertSkill): Promise<Skill>;
+  updateSkill(id: string, skill: Partial<InsertSkill>): Promise<Skill>;
+  deleteSkill(id: string): Promise<void>;
+
+  // Achievements
+  getAchievements(): Promise<Achievement[]>;
+  getFeaturedAchievements(): Promise<Achievement[]>;
+  createAchievement(achievement: InsertAchievement): Promise<Achievement>;
+  updateAchievement(id: string, achievement: Partial<InsertAchievement>): Promise<Achievement>;
+  deleteAchievement(id: string): Promise<void>;
+
+  // Education
+  getEducation(): Promise<Education[]>;
+  createEducation(education: InsertEducation): Promise<Education>;
+  updateEducation(id: string, education: Partial<InsertEducation>): Promise<Education>;
+  deleteEducation(id: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -351,6 +411,230 @@ export class DatabaseStorage implements IStorage {
       .update(contactMessages)
       .set({ isRead: true })
       .where(eq(contactMessages.id, id));
+  }
+
+  // Professional data implementations
+  // Employment Experience
+  async getEmploymentExperience(): Promise<EmploymentExperience[]> {
+    return await db
+      .select()
+      .from(employmentExperience)
+      .where(eq(employmentExperience.isVisible, true))
+      .orderBy(desc(employmentExperience.startDate), desc(employmentExperience.sortOrder));
+  }
+
+  async createEmploymentExperience(experience: InsertEmploymentExperience): Promise<EmploymentExperience> {
+    const [newExperience] = await db
+      .insert(employmentExperience)
+      .values(experience)
+      .returning();
+    return newExperience;
+  }
+
+  async updateEmploymentExperience(id: string, experience: Partial<InsertEmploymentExperience>): Promise<EmploymentExperience> {
+    const [updatedExperience] = await db
+      .update(employmentExperience)
+      .set({ ...experience, updatedAt: new Date() })
+      .where(eq(employmentExperience.id, id))
+      .returning();
+    return updatedExperience;
+  }
+
+  async deleteEmploymentExperience(id: string): Promise<void> {
+    await db.delete(employmentExperience).where(eq(employmentExperience.id, id));
+  }
+
+  // Projects
+  async getProjects(): Promise<Project[]> {
+    return await db
+      .select()
+      .from(projects)
+      .where(eq(projects.isVisible, true))
+      .orderBy(desc(projects.startDate), desc(projects.sortOrder));
+  }
+
+  async getFeaturedProjects(): Promise<Project[]> {
+    return await db
+      .select()
+      .from(projects)
+      .where(and(eq(projects.isVisible, true), eq(projects.isFeatured, true)))
+      .orderBy(desc(projects.startDate), desc(projects.sortOrder));
+  }
+
+  async createProject(project: InsertProject): Promise<Project> {
+    const [newProject] = await db
+      .insert(projects)
+      .values(project)
+      .returning();
+    return newProject;
+  }
+
+  async updateProject(id: string, project: Partial<InsertProject>): Promise<Project> {
+    const [updatedProject] = await db
+      .update(projects)
+      .set({ ...project, updatedAt: new Date() })
+      .where(eq(projects.id, id))
+      .returning();
+    return updatedProject;
+  }
+
+  async deleteProject(id: string): Promise<void> {
+    await db.delete(projects).where(eq(projects.id, id));
+  }
+
+  // Certifications
+  async getCertifications(): Promise<Certification[]> {
+    return await db
+      .select()
+      .from(certifications)
+      .where(eq(certifications.isVisible, true))
+      .orderBy(desc(certifications.issueDate), desc(certifications.sortOrder));
+  }
+
+  async getFeaturedCertifications(): Promise<Certification[]> {
+    return await db
+      .select()
+      .from(certifications)
+      .where(and(eq(certifications.isVisible, true), eq(certifications.isFeatured, true)))
+      .orderBy(desc(certifications.issueDate), desc(certifications.sortOrder));
+  }
+
+  async createCertification(certification: InsertCertification): Promise<Certification> {
+    const [newCertification] = await db
+      .insert(certifications)
+      .values(certification)
+      .returning();
+    return newCertification;
+  }
+
+  async updateCertification(id: string, certification: Partial<InsertCertification>): Promise<Certification> {
+    const [updatedCertification] = await db
+      .update(certifications)
+      .set({ ...certification, updatedAt: new Date() })
+      .where(eq(certifications.id, id))
+      .returning();
+    return updatedCertification;
+  }
+
+  async deleteCertification(id: string): Promise<void> {
+    await db.delete(certifications).where(eq(certifications.id, id));
+  }
+
+  // Skills
+  async getSkills(): Promise<Skill[]> {
+    return await db
+      .select()
+      .from(skills)
+      .where(eq(skills.isVisible, true))
+      .orderBy(desc(skills.proficiencyLevel), skills.sortOrder);
+  }
+
+  async getSkillsByCategory(): Promise<Record<string, Skill[]>> {
+    const allSkills = await this.getSkills();
+    return allSkills.reduce((acc, skill) => {
+      if (!acc[skill.category]) {
+        acc[skill.category] = [];
+      }
+      acc[skill.category].push(skill);
+      return acc;
+    }, {} as Record<string, Skill[]>);
+  }
+
+  async getFeaturedSkills(): Promise<Skill[]> {
+    return await db
+      .select()
+      .from(skills)
+      .where(and(eq(skills.isVisible, true), eq(skills.isFeatured, true)))
+      .orderBy(desc(skills.proficiencyLevel), skills.sortOrder);
+  }
+
+  async createSkill(skill: InsertSkill): Promise<Skill> {
+    const [newSkill] = await db
+      .insert(skills)
+      .values(skill)
+      .returning();
+    return newSkill;
+  }
+
+  async updateSkill(id: string, skill: Partial<InsertSkill>): Promise<Skill> {
+    const [updatedSkill] = await db
+      .update(skills)
+      .set({ ...skill, updatedAt: new Date() })
+      .where(eq(skills.id, id))
+      .returning();
+    return updatedSkill;
+  }
+
+  async deleteSkill(id: string): Promise<void> {
+    await db.delete(skills).where(eq(skills.id, id));
+  }
+
+  // Achievements
+  async getAchievements(): Promise<Achievement[]> {
+    return await db
+      .select()
+      .from(achievements)
+      .where(eq(achievements.isVisible, true))
+      .orderBy(desc(achievements.year), achievements.sortOrder);
+  }
+
+  async getFeaturedAchievements(): Promise<Achievement[]> {
+    return await db
+      .select()
+      .from(achievements)
+      .where(and(eq(achievements.isVisible, true), eq(achievements.isFeatured, true)))
+      .orderBy(desc(achievements.year), achievements.sortOrder);
+  }
+
+  async createAchievement(achievement: InsertAchievement): Promise<Achievement> {
+    const [newAchievement] = await db
+      .insert(achievements)
+      .values(achievement)
+      .returning();
+    return newAchievement;
+  }
+
+  async updateAchievement(id: string, achievement: Partial<InsertAchievement>): Promise<Achievement> {
+    const [updatedAchievement] = await db
+      .update(achievements)
+      .set({ ...achievement, updatedAt: new Date() })
+      .where(eq(achievements.id, id))
+      .returning();
+    return updatedAchievement;
+  }
+
+  async deleteAchievement(id: string): Promise<void> {
+    await db.delete(achievements).where(eq(achievements.id, id));
+  }
+
+  // Education
+  async getEducation(): Promise<Education[]> {
+    return await db
+      .select()
+      .from(education)
+      .where(eq(education.isVisible, true))
+      .orderBy(desc(education.endDate), education.sortOrder);
+  }
+
+  async createEducation(educationData: InsertEducation): Promise<Education> {
+    const [newEducation] = await db
+      .insert(education)
+      .values(educationData)
+      .returning();
+    return newEducation;
+  }
+
+  async updateEducation(id: string, educationData: Partial<InsertEducation>): Promise<Education> {
+    const [updatedEducation] = await db
+      .update(education)
+      .set({ ...educationData, updatedAt: new Date() })
+      .where(eq(education.id, id))
+      .returning();
+    return updatedEducation;
+  }
+
+  async deleteEducation(id: string): Promise<void> {
+    await db.delete(education).where(eq(education.id, id));
   }
 }
 

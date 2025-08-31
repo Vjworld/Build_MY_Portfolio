@@ -2,6 +2,9 @@ import NavigationHeader from "@/components/portfolio/navigation-header";
 import HeroSection from "@/components/portfolio/hero-section";
 import AboutSection from "@/components/portfolio/about-section";
 import ExperienceSection from "@/components/portfolio/experience-section";
+import CertificationsSection from "@/components/portfolio/certifications-section";
+import ProjectsSection from "@/components/portfolio/projects-section";
+import SkillsSection from "@/components/portfolio/skills-section";
 import TestimonialsSection from "@/components/portfolio/testimonials-section";
 import BlogSection from "@/components/blog/blog-section";
 import CommunitySection from "@/components/community/community-section";
@@ -17,6 +20,9 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <ExperienceSection />
+        <CertificationsSection />
+        <ProjectsSection />
+        <SkillsSection />
         <TestimonialsSection />
         <BlogSection />
         <CommunitySection />
