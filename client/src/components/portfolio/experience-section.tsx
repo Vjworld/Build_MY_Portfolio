@@ -59,7 +59,7 @@ export default function ExperienceSection() {
             Professional Experience
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A comprehensive journey through {experiences.length}+ years of experience in project management, SaaS delivery, and technology leadership across BFSI, EdTech, and enterprise domains. Plus 11+ years experience in US Retirement Back Office Process and Business Process Outsourcing domains.
+            A comprehensive journey through {experiences.length}+ years of experience in project management, SaaS delivery, and technology leadership across BFSI, EdTech, and enterprise domains. Plus 11+ years experience in US Retirement Insurance Back Office Process and Business Process Outsourcing domains.
           </p>
         </div>
 
