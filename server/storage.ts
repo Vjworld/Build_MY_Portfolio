@@ -101,6 +101,7 @@ export interface IStorage {
   // Contact operations
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
   getContactMessages(): Promise<ContactMessage[]>;
+  getContactMessagesInDateRange(startDate: Date, endDate: Date): Promise<ContactMessage[]>;
   markContactMessageAsRead(id: string): Promise<void>;
 
   // Professional data operations
@@ -415,6 +416,16 @@ export class DatabaseStorage implements IStorage {
 
   async getContactMessages(): Promise<ContactMessage[]> {
     return await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
+  }
+
+  async getContactMessagesInDateRange(startDate: Date, endDate: Date): Promise<ContactMessage[]> {
+    return await db.select()
+      .from(contactMessages)
+      .where(and(
+        sql`${contactMessages.createdAt} >= ${startDate}`,
+        sql`${contactMessages.createdAt} <= ${endDate}`
+      ))
+      .orderBy(desc(contactMessages.createdAt));
   }
 
   async markContactMessageAsRead(id: string): Promise<void> {

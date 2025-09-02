@@ -406,6 +406,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertContactMessageSchema.parse(req.body);
       const message = await storage.createContactMessage(validatedData);
+      
+      // Send email notification using SendGrid
+      try {
+        const { sendEmail, createContactFormNotificationEmail } = await import('./sendgrid');
+        const emailTemplate = createContactFormNotificationEmail({
+          name: validatedData.name,
+          email: validatedData.email,
+          subject: validatedData.subject || null,
+          message: validatedData.message,
+          submittedAt: new Date().toLocaleString()
+        });
+        
+        await sendEmail({
+          to: 'support@ruvab.it.com',
+          from: 'noreply@ruvab.it.com',
+          subject: emailTemplate.subject,
+          html: emailTemplate.html,
+          text: emailTemplate.text
+        });
+      } catch (emailError) {
+        console.error("Error sending notification email:", emailError);
+        // Don't fail the contact form submission if email fails
+      }
+      
       res.json(message);
     } catch (error) {
       console.error("Error creating contact message:", error);
@@ -592,6 +616,92 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: 'Failed to delete social link' });
     }
   });
+
+  // Weekly summary email endpoint
+  app.post('/api/contact/weekly-summary', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      await sendWeeklySummaryEmail();
+      res.json({ success: true, message: "Weekly summary email sent successfully" });
+    } catch (error) {
+      console.error("Error sending weekly summary:", error);
+      res.status(500).json({ message: "Failed to send weekly summary" });
+    }
+  });
+
+  // Function to send weekly summary email
+  async function sendWeeklySummaryEmail() {
+    try {
+      const { sendEmail, createWeeklySummaryEmail } = await import('./sendgrid');
+      
+      // Get contact submissions from the last 7 days
+      const weekAgo = new Date();
+      weekAgo.setDate(weekAgo.getDate() - 7);
+      
+      const contactSubmissions = await storage.getContactMessagesInDateRange(weekAgo, new Date());
+      
+      const weekStartDate = weekAgo.toLocaleDateString();
+      const weekEndDate = new Date().toLocaleDateString();
+      
+      const emailTemplate = createWeeklySummaryEmail(
+        contactSubmissions,
+        weekStartDate,
+        weekEndDate
+      );
+      
+      await sendEmail({
+        to: 'support@ruvab.it.com',
+        from: 'noreply@ruvab.it.com',
+        subject: emailTemplate.subject,
+        html: emailTemplate.html,
+        text: emailTemplate.text
+      });
+      
+      console.log(`Weekly summary email sent successfully for period ${weekStartDate} to ${weekEndDate}`);
+    } catch (error) {
+      console.error("Error sending weekly summary email:", error);
+      throw error;
+    }
+  }
+
+  // Initialize weekly email schedule (runs every Monday at 9 AM)
+  function initializeWeeklyEmailSchedule() {
+    const scheduleWeeklyEmail = () => {
+      const now = new Date();
+      const nextMonday = new Date();
+      nextMonday.setDate(now.getDate() + ((1 + 7 - now.getDay()) % 7 || 7));
+      nextMonday.setHours(9, 0, 0, 0); // 9 AM
+      
+      if (nextMonday <= now) {
+        nextMonday.setDate(nextMonday.getDate() + 7);
+      }
+      
+      const timeUntilNextMonday = nextMonday.getTime() - now.getTime();
+      
+      setTimeout(async () => {
+        try {
+          await sendWeeklySummaryEmail();
+        } catch (error) {
+          console.error("Scheduled weekly email failed:", error);
+        }
+        // Schedule next week
+        scheduleWeeklyEmail();
+      }, timeUntilNextMonday);
+      
+      console.log(`Next weekly summary email scheduled for: ${nextMonday.toLocaleString()}`);
+    };
+    
+    scheduleWeeklyEmail();
+  }
+
+  // Start the weekly email schedule
+  initializeWeeklyEmailSchedule();
 
   const httpServer = createServer(app);
   return httpServer;
