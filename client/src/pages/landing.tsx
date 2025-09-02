@@ -48,29 +48,30 @@ export default function Landing() {
             <Code2 className="w-8 h-8 text-primary" />
             <span className="text-xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">Portfolio Builder</span>
           </div>
-          <div className="flex items-center gap-4">
-            <Button variant="outline" onClick={() => window.location.href = '/api/login'} data-testid="button-signin">Sign In</Button>
-            <Button onClick={() => window.location.href = '/api/login'} data-testid="button-get-started">Get Started</Button>
+          <div className="flex items-center gap-6">
+            <Link href="/" className="text-gray-700 hover:text-purple-700 transition-colors font-semibold" data-testid="link-home">Home</Link>
+            <Link href="/examples" className="text-gray-700 hover:text-purple-700 transition-colors font-semibold" data-testid="link-examples">Examples</Link>
+            <Link href="#contact" className="text-gray-700 hover:text-purple-700 transition-colors font-semibold" data-testid="link-contact">Contact</Link>
+            <Button variant="outline" className="border-2 border-purple-600 text-purple-700 hover:bg-purple-50" onClick={() => window.location.href = '/api/login'} data-testid="button-signin">Sign In</Button>
+            <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" onClick={() => window.location.href = '/api/login'} data-testid="button-get-started">Get Started</Button>
           </div>
         </div>
       </header>
 
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="absolute top-10 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-        <div className="absolute top-10 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+      <section className="py-20 bg-white relative overflow-hidden">
+        {/* Subtle background decoration */}
+        <div className="absolute top-20 right-20 w-32 h-32 bg-purple-100 rounded-full opacity-30"></div>
+        <div className="absolute bottom-20 left-20 w-24 h-24 bg-blue-100 rounded-full opacity-30"></div>
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="mb-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0 shadow-lg hover:shadow-xl transition-shadow">✨ New Platform Launch</Badge>
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent leading-tight">
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-gray-900 leading-tight">
                 Build Your Professional Portfolio
               </h1>
-              <p className="text-xl text-slate-700 mb-8 leading-relaxed font-medium">
+              <p className="text-xl text-gray-800 mb-8 leading-relaxed font-semibold">
                 Create stunning portfolio websites like this one. Choose from 10+ templates, 
                 customize your theme, and showcase your work to the world.
               </p>
@@ -86,23 +87,23 @@ export default function Landing() {
                   </Button>
                 </Link>
               </div>
-              <div className="flex items-center gap-6 text-sm text-slate-600">
+              <div className="flex items-center gap-6 text-sm text-gray-800">
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-500" />
-                  <span className="font-medium">Free to start</span>
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                  <span className="font-bold">Free to start</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-500" />
-                  <span className="font-medium">No coding required</span>
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                  <span className="font-bold">No coding required</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-emerald-500" />
-                  <span className="font-medium">Ready in minutes</span>
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                  <span className="font-bold">Ready in minutes</span>
                 </div>
               </div>
             </div>
             <div className="relative">
-              <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+              <Card className="shadow-2xl border bg-white">
                 <CardHeader className="text-center bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white">
                   <CardTitle className="text-2xl font-bold">Featured Portfolio</CardTitle>
                   <p className="text-white/90 font-medium">Vaibhav Selukar - Tech Leader</p>
@@ -111,14 +112,14 @@ export default function Landing() {
                   <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-6 flex items-center justify-center">
                     <div className="text-center">
                       <Globe className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-                      <p className="text-slate-800 font-semibold">Portfolio Preview</p>
-                      <p className="text-sm text-slate-600 font-medium">Complete with blog, projects & more</p>
+                      <p className="text-gray-900 font-bold">Portfolio Preview</p>
+                      <p className="text-sm text-gray-800 font-semibold">Complete with blog, projects & more</p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                      <span className="text-sm font-semibold text-slate-800">Professional Template</span>
+                      <span className="text-sm font-bold text-gray-900">Professional Template</span>
                     </div>
                     <Link href="/examples">
                       <Button size="sm" variant="outline" data-testid="button-preview-portfolio">
@@ -137,8 +138,8 @@ export default function Landing() {
       <section className="py-20 bg-gradient-to-b from-white to-purple-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-800 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Choose Your Perfect Template</h2>
-            <p className="text-xl text-slate-700 max-w-3xl mx-auto font-medium">
+            <h2 className="text-4xl font-bold mb-6 text-gray-900">Choose Your Perfect Template</h2>
+            <p className="text-xl text-gray-800 max-w-3xl mx-auto font-semibold">
               Start with a professionally designed template and customize it to match your unique style and brand.
             </p>
           </div>
@@ -154,8 +155,8 @@ export default function Landing() {
               >
                 <CardContent className="p-6">
                   <div className="text-6xl mb-4 text-center">{template.preview}</div>
-                  <h3 className="font-bold text-lg mb-2 text-slate-800">{template.name}</h3>
-                  <p className="text-slate-600 text-sm mb-4 font-medium">{template.description}</p>
+                  <h3 className="font-bold text-lg mb-2 text-gray-900">{template.name}</h3>
+                  <p className="text-gray-800 text-sm mb-4 font-semibold">{template.description}</p>
                   <Button 
                     size="sm" 
                     variant={selectedTemplate === template.id ? "default" : "outline"} 
@@ -178,8 +179,8 @@ export default function Landing() {
       <section className="py-20 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800 bg-clip-text text-transparent">Everything You Need to Succeed</h2>
-            <p className="text-xl text-slate-700 max-w-3xl mx-auto font-medium">
+            <h2 className="text-4xl font-bold mb-6 text-gray-900">Everything You Need to Succeed</h2>
+            <p className="text-xl text-gray-800 max-w-3xl mx-auto font-semibold">
               Our platform provides all the tools and features you need to create a professional online presence.
             </p>
           </div>
@@ -190,8 +191,8 @@ export default function Landing() {
                   <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-blue-100 rounded-lg flex items-center justify-center mb-4 text-purple-600">
                     {feature.icon}
                   </div>
-                  <h3 className="font-bold text-lg mb-2 text-slate-800">{feature.title}</h3>
-                  <p className="text-slate-600 font-medium">{feature.description}</p>
+                  <h3 className="font-bold text-lg mb-2 text-gray-900">{feature.title}</h3>
+                  <p className="text-gray-800 font-semibold">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
