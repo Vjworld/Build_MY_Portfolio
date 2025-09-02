@@ -49,7 +49,6 @@ export default function Landing() {
             <span className="text-xl font-bold">Portfolio Builder</span>
           </div>
           <div className="flex items-center gap-4">
-            <HeaderReplitButton />
             <Button variant="outline" onClick={() => window.location.href = '/api/login'} data-testid="button-signin">Sign In</Button>
             <Button onClick={() => window.location.href = '/api/login'} data-testid="button-get-started">Get Started</Button>
           </div>
