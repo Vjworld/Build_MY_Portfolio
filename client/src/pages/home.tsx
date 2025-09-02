@@ -15,6 +15,7 @@ import CommunitySection from "@/components/community/community-section";
 import ContactSection from "@/components/contact/contact-section";
 import Footer from "@/components/portfolio/footer";
 import BlogPostModal from "@/components/blog/blog-post-modal";
+import { FloatingReplitButton } from "@/components/replit-referral-button";
 
 export default function Home() {
   return (
@@ -37,6 +38,7 @@ export default function Home() {
         <ContactSection />
       </main>
       <Footer />
+      <FloatingReplitButton />
       <BlogPostModal />
     </div>
   );

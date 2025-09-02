@@ -1,11 +1,16 @@
 import { Github, Linkedin, Twitter } from "lucide-react";
+import { FooterReplitButton } from "@/components/replit-referral-button";
 
 export default function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground py-16">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-2">
+          <div className="md:col-span-1">
+            <FooterReplitButton />
+          </div>
+          
+          <div className="md:col-span-1">
             <h3 className="text-2xl font-playfair font-bold mb-4">Vaibhav Selukar</h3>
             <p className="text-primary-foreground/80 mb-6 leading-relaxed">
               Empowering businesses through strategic technology leadership and innovative solutions. 

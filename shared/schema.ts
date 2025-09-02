@@ -29,12 +29,63 @@ export const sessions = pgTable(
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   email: varchar("email").unique(),
+  password: varchar("password"), // For local authentication
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
   isAdmin: boolean("is_admin").default(false),
+  isEmailVerified: boolean("is_email_verified").default(false),
+  resetPasswordToken: varchar("reset_password_token"),
+  resetPasswordExpires: timestamp("reset_password_expires"),
+  lastLoginAt: timestamp("last_login_at"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// User portfolios table
+export const userPortfolios = pgTable("user_portfolios", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  templateId: varchar("template_id").references(() => portfolioTemplates.id),
+  title: varchar("title").notNull(),
+  slug: varchar("slug").unique().notNull(),
+  description: text("description"),
+  themeConfig: jsonb("theme_config"), // Custom theme settings
+  isPublished: boolean("is_published").default(false),
+  isPublic: boolean("is_public").default(true),
+  customDomain: varchar("custom_domain"),
+  metadata: jsonb("metadata"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Portfolio templates table
+export const portfolioTemplates = pgTable("portfolio_templates", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  description: text("description"),
+  category: varchar("category").notNull(), // 'creative', 'professional', 'minimal', etc.
+  previewImage: varchar("preview_image"),
+  templateConfig: jsonb("template_config"), // Template structure and default settings
+  isActive: boolean("is_active").default(true),
+  isFeatured: boolean("is_featured").default(false),
+  usageCount: integer("usage_count").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// User delete requests table
+export const userDeleteRequests = pgTable("user_delete_requests", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  portfolioId: varchar("portfolio_id").references(() => userPortfolios.id),
+  requestType: varchar("request_type").notNull(), // 'portfolio', 'account'
+  reason: text("reason"),
+  status: varchar("status").default("pending"), // 'pending', 'approved', 'rejected'
+  adminNotes: text("admin_notes"),
+  requestedAt: timestamp("requested_at").defaultNow(),
+  processedAt: timestamp("processed_at"),
+  processedBy: varchar("processed_by").references(() => users.id),
 });
 
 // Portfolio sections table
@@ -352,6 +403,46 @@ export const socialLinksRelations = relations(socialLinks, ({ one }) => ({
   // Add relations if needed
 }));
 
+// New platform relations
+export const usersPortfolioRelations = relations(users, ({ many }) => ({
+  portfolios: many(userPortfolios),
+  deleteRequests: many(userDeleteRequests),
+  processedRequests: many(userDeleteRequests, {
+    relationName: "processedBy"
+  })
+}));
+
+export const userPortfoliosRelations = relations(userPortfolios, ({ one }) => ({
+  user: one(users, {
+    fields: [userPortfolios.userId],
+    references: [users.id],
+  }),
+  template: one(portfolioTemplates, {
+    fields: [userPortfolios.templateId],
+    references: [portfolioTemplates.id],
+  }),
+}));
+
+export const portfolioTemplatesRelations = relations(portfolioTemplates, ({ many }) => ({
+  userPortfolios: many(userPortfolios),
+}));
+
+export const userDeleteRequestsRelations = relations(userDeleteRequests, ({ one }) => ({
+  user: one(users, {
+    fields: [userDeleteRequests.userId],
+    references: [users.id],
+  }),
+  portfolio: one(userPortfolios, {
+    fields: [userDeleteRequests.portfolioId],
+    references: [userPortfolios.id],
+  }),
+  processedByUser: one(users, {
+    fields: [userDeleteRequests.processedBy],
+    references: [users.id],
+    relationName: "processedBy"
+  }),
+}));
+
 // Schema types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -480,3 +571,55 @@ export const insertSocialLinkSchema = createInsertSchema(socialLinks).omit({
 });
 export type InsertSocialLink = z.infer<typeof insertSocialLinkSchema>;
 export type SocialLink = typeof socialLinks.$inferSelect;
+
+// New platform schema types
+export const insertUserPortfolioSchema = createInsertSchema(userPortfolios).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+export type InsertUserPortfolio = z.infer<typeof insertUserPortfolioSchema>;
+export type UserPortfolio = typeof userPortfolios.$inferSelect;
+
+export const insertPortfolioTemplateSchema = createInsertSchema(portfolioTemplates).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  usageCount: true,
+});
+export type InsertPortfolioTemplate = z.infer<typeof insertPortfolioTemplateSchema>;
+export type PortfolioTemplate = typeof portfolioTemplates.$inferSelect;
+
+export const insertUserDeleteRequestSchema = createInsertSchema(userDeleteRequests).omit({
+  id: true,
+  requestedAt: true,
+  processedAt: true,
+});
+export type InsertUserDeleteRequest = z.infer<typeof insertUserDeleteRequestSchema>;
+export type UserDeleteRequest = typeof userDeleteRequests.$inferSelect;
+
+// Authentication schemas
+export const userSignUpSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+});
+export type UserSignUp = z.infer<typeof userSignUpSchema>;
+
+export const userSignInSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(1, "Password is required"),
+});
+export type UserSignIn = z.infer<typeof userSignInSchema>;
+
+export const resetPasswordSchema = z.object({
+  email: z.string().email("Invalid email address"),
+});
+export type ResetPassword = z.infer<typeof resetPasswordSchema>;
+
+export const newPasswordSchema = z.object({
+  token: z.string().min(1, "Reset token is required"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+export type NewPassword = z.infer<typeof newPasswordSchema>;

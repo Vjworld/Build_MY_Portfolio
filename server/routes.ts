@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { authService } from "./auth";
 import { 
   insertPortfolioSectionSchema,
   insertBlogPostSchema,
@@ -11,14 +12,135 @@ import {
   insertContestSchema,
   insertFaqSchema,
   insertContactMessageSchema,
+  userSignUpSchema,
+  userSignInSchema,
+  resetPasswordSchema,
+  newPasswordSchema,
 } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
-  // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+  // Middleware for both auth types
+  const authMiddleware = async (req: any, res: any, next: any) => {
+    // Try Replit auth first
+    if (req.isAuthenticated && req.isAuthenticated()) {
+      return next();
+    }
+
+    // Try JWT auth
+    const authHeader = req.headers.authorization;
+    if (authHeader?.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      const user = await authService.getUserFromToken(token);
+      if (user) {
+        req.user = { claims: { sub: user.id }, localAuth: true, ...user };
+        return next();
+      }
+    }
+
+    return res.status(401).json({ message: "Unauthorized" });
+  };
+
+  // Local auth routes
+  app.post('/api/auth/signup', async (req, res) => {
+    try {
+      const validatedData = userSignUpSchema.parse(req.body);
+      const result = await authService.signUp(validatedData);
+      
+      if (result.success) {
+        res.json({
+          success: true,
+          user: result.user,
+          token: result.token
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: result.message
+        });
+      }
+    } catch (error) {
+      console.error("Sign up error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to create account"
+      });
+    }
+  });
+
+  app.post('/api/auth/signin', async (req, res) => {
+    try {
+      const validatedData = userSignInSchema.parse(req.body);
+      const result = await authService.signIn(validatedData);
+      
+      if (result.success) {
+        res.json({
+          success: true,
+          user: result.user,
+          token: result.token
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: result.message
+        });
+      }
+    } catch (error) {
+      console.error("Sign in error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to sign in"
+      });
+    }
+  });
+
+  app.post('/api/auth/forgot-password', async (req, res) => {
+    try {
+      const validatedData = resetPasswordSchema.parse(req.body);
+      const result = await authService.requestPasswordReset(validatedData.email);
+      
+      res.json({
+        success: true,
+        message: result.message
+      });
+    } catch (error) {
+      console.error("Password reset request error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to process password reset request"
+      });
+    }
+  });
+
+  app.post('/api/auth/reset-password', async (req, res) => {
+    try {
+      const validatedData = newPasswordSchema.parse(req.body);
+      const result = await authService.resetPassword(validatedData.token, validatedData.password);
+      
+      if (result.success) {
+        res.json({
+          success: true,
+          message: result.message
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: result.message
+        });
+      }
+    } catch (error) {
+      console.error("Password reset error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to reset password"
+      });
+    }
+  });
+
+  // Auth routes (supporting both Replit and local auth)
+  app.get('/api/auth/user', authMiddleware, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const user = await storage.getUser(userId);
