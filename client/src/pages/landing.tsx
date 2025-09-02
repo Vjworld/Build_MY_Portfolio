@@ -42,11 +42,11 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-white/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b bg-white/95 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Code2 className="w-8 h-8 text-primary" />
-            <span className="text-xl font-bold">Portfolio Builder</span>
+            <span className="text-xl font-bold text-gray-900">Portfolio Builder</span>
           </div>
           <div className="flex items-center gap-4">
             <Button variant="outline" onClick={() => window.location.href = '/api/login'} data-testid="button-signin">Sign In</Button>
@@ -57,15 +57,15 @@ export default function Landing() {
 
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="mb-6 bg-primary/10 text-primary">✨ New Platform Launch</Badge>
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+              <Badge className="mb-6 bg-blue-100 text-blue-800 border border-blue-200">✨ New Platform Launch</Badge>
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
                 Build Your Professional Portfolio
               </h1>
-              <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed font-medium">
+              <p className="text-xl text-gray-800 mb-8 leading-relaxed font-semibold">
                 Create stunning portfolio websites like this one. Choose from 10+ templates, 
                 customize your theme, and showcase your work to the world.
               </p>
@@ -81,18 +81,18 @@ export default function Landing() {
                   </Button>
                 </Link>
               </div>
-              <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+              <div className="flex items-center gap-6 text-sm text-gray-800">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="font-medium">Free to start</span>
+                  <span className="font-semibold">Free to start</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="font-medium">No coding required</span>
+                  <span className="font-semibold">No coding required</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="font-medium">Ready in minutes</span>
+                  <span className="font-semibold">Ready in minutes</span>
                 </div>
               </div>
             </div>
@@ -100,20 +100,20 @@ export default function Landing() {
               <Card className="shadow-2xl">
                 <CardHeader className="text-center bg-gradient-to-r from-primary to-blue-600 text-white">
                   <CardTitle className="text-2xl">Featured Portfolio</CardTitle>
-                  <p className="text-primary-foreground/80">Vaibhav Selukar - Tech Leader</p>
+                  <p className="text-white/90">Vaibhav Selukar - Tech Leader</p>
                 </CardHeader>
                 <CardContent className="p-8">
                   <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-6 flex items-center justify-center">
                     <div className="text-center">
                       <Globe className="w-12 h-12 text-primary mx-auto mb-4" />
-                      <p className="text-gray-700 dark:text-gray-300 font-medium">Portfolio Preview</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Complete with blog, projects & more</p>
+                      <p className="text-gray-800 font-semibold">Portfolio Preview</p>
+                      <p className="text-sm text-gray-700 font-medium">Complete with blog, projects & more</p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                      <span className="text-sm font-medium">Professional Template</span>
+                      <span className="text-sm font-semibold text-gray-800">Professional Template</span>
                     </div>
                     <Link href="/examples">
                       <Button size="sm" variant="outline" data-testid="button-preview-portfolio">
@@ -132,8 +132,8 @@ export default function Landing() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">Choose Your Perfect Template</h2>
-            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto font-medium">
+            <h2 className="text-4xl font-bold mb-6 text-gray-900">Choose Your Perfect Template</h2>
+            <p className="text-xl text-gray-800 max-w-3xl mx-auto font-semibold">
               Start with a professionally designed template and customize it to match your unique style and brand.
             </p>
           </div>
@@ -149,8 +149,8 @@ export default function Landing() {
               >
                 <CardContent className="p-6">
                   <div className="text-6xl mb-4 text-center">{template.preview}</div>
-                  <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">{template.name}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 font-medium">{template.description}</p>
+                  <h3 className="font-bold text-lg mb-2 text-gray-900">{template.name}</h3>
+                  <p className="text-gray-800 text-sm mb-4 font-semibold">{template.description}</p>
                   <Button 
                     size="sm" 
                     variant={selectedTemplate === template.id ? "default" : "outline"} 
@@ -169,8 +169,8 @@ export default function Landing() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">Everything You Need to Succeed</h2>
-            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto font-medium">
+            <h2 className="text-4xl font-bold mb-6 text-gray-900">Everything You Need to Succeed</h2>
+            <p className="text-xl text-gray-800 max-w-3xl mx-auto font-semibold">
               Our platform provides all the tools and features you need to create a professional online presence.
             </p>
           </div>
@@ -181,8 +181,8 @@ export default function Landing() {
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 text-primary">
                     {feature.icon}
                   </div>
-                  <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">{feature.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 font-medium">{feature.description}</p>
+                  <h3 className="font-bold text-lg mb-2 text-gray-900">{feature.title}</h3>
+                  <p className="text-gray-800 font-semibold">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
