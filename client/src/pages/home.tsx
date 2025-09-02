@@ -38,7 +38,6 @@ export default function Home() {
         <ContactSection />
       </main>
       <Footer />
-      <FloatingReplitButton />
       <BlogPostModal />
     </div>
   );

@@ -17,6 +17,7 @@ import {
   Trophy
 } from "lucide-react";
 import { useState } from "react";
+import { Link, useLocation } from "wouter";
 
 export default function Landing() {
   const [selectedTemplate, setSelectedTemplate] = useState("modern");
@@ -49,8 +50,8 @@ export default function Landing() {
           </div>
           <div className="flex items-center gap-4">
             <HeaderReplitButton />
-            <Button variant="outline" data-testid="button-signin">Sign In</Button>
-            <Button data-testid="button-get-started">Get Started</Button>
+            <Button variant="outline" onClick={() => window.location.href = '/api/login'} data-testid="button-signin">Sign In</Button>
+            <Button onClick={() => window.location.href = '/api/login'} data-testid="button-get-started">Get Started</Button>
           </div>
         </div>
       </header>
@@ -64,35 +65,37 @@ export default function Landing() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="mb-6 bg-primary/10 text-primary">✨ New Platform Launch</Badge>
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
                 Build Your Professional Portfolio
               </h1>
-              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+              <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed font-medium">
                 Create stunning portfolio websites like this one. Choose from 10+ templates, 
                 customize your theme, and showcase your work to the world.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button size="lg" className="text-lg px-8" data-testid="button-create-portfolio">
+                <Button size="lg" className="text-lg px-8" onClick={() => window.location.href = '/api/login'} data-testid="button-create-portfolio">
                   Create Your Portfolio
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8" data-testid="button-view-example">
-                  <User className="w-5 h-5 mr-2" />
-                  View Example Portfolio
-                </Button>
+                <Link href="/examples">
+                  <Button size="lg" variant="outline" className="text-lg px-8" data-testid="button-view-example">
+                    <User className="w-5 h-5 mr-2" />
+                    View Example Portfolio
+                  </Button>
+                </Link>
               </div>
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span>Free to start</span>
+                  <span className="font-medium">Free to start</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span>No coding required</span>
+                  <span className="font-medium">No coding required</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span>Ready in minutes</span>
+                  <span className="font-medium">Ready in minutes</span>
                 </div>
               </div>
             </div>
@@ -106,8 +109,8 @@ export default function Landing() {
                   <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-6 flex items-center justify-center">
                     <div className="text-center">
                       <Globe className="w-12 h-12 text-primary mx-auto mb-4" />
-                      <p className="text-muted-foreground">Portfolio Preview</p>
-                      <p className="text-sm text-muted-foreground">Complete with blog, projects & more</p>
+                      <p className="text-gray-700 dark:text-gray-300 font-medium">Portfolio Preview</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Complete with blog, projects & more</p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
@@ -115,9 +118,11 @@ export default function Landing() {
                       <Star className="w-4 h-4 text-yellow-500 fill-current" />
                       <span className="text-sm font-medium">Professional Template</span>
                     </div>
-                    <Button size="sm" variant="outline" data-testid="button-preview-portfolio">
-                      <ArrowRight className="w-4 h-4" />
-                    </Button>
+                    <Link href="/examples">
+                      <Button size="sm" variant="outline" data-testid="button-preview-portfolio">
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
@@ -130,8 +135,8 @@ export default function Landing() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6">Choose Your Perfect Template</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">Choose Your Perfect Template</h2>
+            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto font-medium">
               Start with a professionally designed template and customize it to match your unique style and brand.
             </p>
           </div>
@@ -147,8 +152,8 @@ export default function Landing() {
               >
                 <CardContent className="p-6">
                   <div className="text-6xl mb-4 text-center">{template.preview}</div>
-                  <h3 className="font-semibold text-lg mb-2">{template.name}</h3>
-                  <p className="text-muted-foreground text-sm mb-4">{template.description}</p>
+                  <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">{template.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 font-medium">{template.description}</p>
                   <Button 
                     size="sm" 
                     variant={selectedTemplate === template.id ? "default" : "outline"} 
@@ -167,8 +172,8 @@ export default function Landing() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6">Everything You Need to Succeed</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">Everything You Need to Succeed</h2>
+            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto font-medium">
               Our platform provides all the tools and features you need to create a professional online presence.
             </p>
           </div>
@@ -179,8 +184,8 @@ export default function Landing() {
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 text-primary">
                     {feature.icon}
                   </div>
-                  <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
+                  <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">{feature.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 font-medium">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -196,13 +201,15 @@ export default function Landing() {
             Join thousands of professionals who have already created their portfolios with our platform.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="text-lg px-8" data-testid="button-start-building">
+            <Button size="lg" variant="secondary" className="text-lg px-8" onClick={() => window.location.href = '/api/login'} data-testid="button-start-building">
               <Sparkles className="w-5 h-5 mr-2" />
               Start Building Now
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" data-testid="button-view-examples">
-              View More Examples
-            </Button>
+            <Link href="/examples">
+              <Button size="lg" variant="outline" className="text-lg px-8 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" data-testid="button-view-examples">
+                View More Examples
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -223,30 +230,35 @@ export default function Landing() {
             <div>
               <h4 className="font-semibold text-white mb-3">Product</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Templates</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
+                <li><Link href="/examples" className="hover:text-white transition-colors">Templates</Link></li>
+                <li><a href="#features" className="hover:text-white transition-colors">Features</a></li>
+                <li><a href="#pricing" className="hover:text-white transition-colors">Pricing</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Support</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Community</a></li>
+                <li><a href="#contact" className="hover:text-white transition-colors">Help Center</a></li>
+                <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#community" className="hover:text-white transition-colors">Community</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Company</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                <li><a href="#about" className="hover:text-white transition-colors">About</a></li>
+                <li><a href="#blog" className="hover:text-white transition-colors">Blog</a></li>
+                <li><a href="#careers" className="hover:text-white transition-colors">Careers</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-            <p>&copy; 2024 Portfolio Builder. All rights reserved. Built with ❤️ on Replit.</p>
+          <div className="border-t border-gray-800 mt-8 pt-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <p className="text-sm">&copy; 2024 Portfolio Builder. All rights reserved. Built with ❤️ on Replit.</p>
+              <div className="flex items-center gap-4">
+                <BannerReplitButton />
+              </div>
+            </div>
           </div>
         </div>
       </footer>
