@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaibhav Selukar - Portfolio & Blog Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                borderRadius: {
+                    lg: "var(--radius)",
+                    md: "calc(var(--radius) - 2px)",
+                    sm: "calc(var(--radius) - 4px)",
+                },
+                colors: {
+                    background: "var(--background)",
+                    foreground: "var(--foreground)",
+                    card: {
+                        DEFAULT: "var(--card)",
+                        foreground: "var(--card-foreground)",
+                    },
+                    primary: {
+                        DEFAULT: "var(--primary)",
+                        foreground: "var(--primary-foreground)",
+                    },
+                    secondary: {
+                        DEFAULT: "var(--secondary)",
+                        foreground: "var(--secondary-foreground)",
+                    },
+                    muted: {
+                        DEFAULT: "var(--muted)",
+                        foreground: "var(--muted-foreground)",
+                    },
+                    accent: {
+                        DEFAULT: "var(--accent)",
+                        foreground: "var(--accent-foreground)",
+                    },
+                    destructive: {
+                        DEFAULT: "var(--destructive)",
+                        foreground: "var(--destructive-foreground)",
+                    },
+                    border: "var(--border)",
+                    input: "var(--input)",
+                    ring: "var(--ring)",
+                }
+            }
+        }
+    };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --background: hsl(0 0% 100%);
+            --foreground: hsl(210 12% 22%);
+            --card: hsl(0 0% 100%);
+            --card-foreground: hsl(210 12% 22%);
+            --primary: hsl(210 29% 24%);
+            --primary-foreground: hsl(0 0% 98%);
+            --secondary: hsl(204 70% 53%);
+            --secondary-foreground: hsl(0 0% 98%);
+            --muted: hsl(210 40% 96%);
+            --muted-foreground: hsl(210 12% 45%);
+            --accent: hsl(4 90% 58%);
+            --accent-foreground: hsl(0 0% 98%);
+            --destructive: hsl(4 90% 58%);
+            --destructive-foreground: hsl(0 0% 98%);
+            --border: hsl(214 32% 91%);
+            --input: hsl(214 32% 91%);
+            --ring: hsl(210 29% 24%);
+            --radius: 8px;
+            --success: hsl(145 63% 42%);
+        }
+        
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-source { font-family: 'Source Sans Pro', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-foreground font-source">
+    <!-- @COMPONENT: NavigationHeader [role-based navigation with admin toggle] -->
+    <nav class="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-xl font-playfair font-semibold text-primary">Vaibhav Selukar</h1>
+                    <span class="hidden md:block text-sm text-muted-foreground">Visionary Leader & AI Expert</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#portfolio" class="text-foreground hover:text-primary transition-colors">Portfolio</a>
+                    <a href="#blog" class="text-foreground hover:text-primary transition-colors">Blog</a>
+                    <a href="#community" class="text-foreground hover:text-primary transition-colors">Community</a>
+                    <a href="#contact" class="text-foreground hover:text-primary transition-colors">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button id="viewToggle" class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/90 transition-colors">
+                        <i class="fas fa-eye mr-2"></i>
+                        <span data-bind="viewMode">Public View</span>
+                    </button>
+                    <button class="md:hidden">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: NavigationHeader -->
+
+    <!-- @STATE: viewMode:string = 'public' | 'admin' -->
+    <!-- @STATE: isAuthenticated:boolean = false -->
+
+    <!-- Admin Dashboard View -->
+    <div id="adminView" class="hidden">
+        <!-- @COMPONENT: AdminDashboard [CRUD operations for portfolio content] -->
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="mb-8">
+                <h2 class="text-3xl font-playfair font-bold text-primary mb-2">Admin Dashboard</h2>
+                <p class="text-muted-foreground">Manage your portfolio content and settings</p>
+            </div>
+            
+            <!-- Admin Navigation Tabs -->
+            <div class="border-b border-border mb-8">
+                <nav class="flex space-x-8">
+                    <button class="py-2 px-1 border-b-2 border-primary text-primary font-medium">Portfolio</button>
+                    <button class="py-2 px-1 border-b-2 border-transparent text-muted-foreground hover:text-foreground">Blog Posts</button>
+                    <button class="py-2 px-1 border-b-2 border-transparent text-muted-foreground hover:text-foreground">Community</button>
+                    <button class="py-2 px-1 border-b-2 border-transparent text-muted-foreground hover:text-foreground">Settings</button>
+                </nav>
+            </div>
+
+            <!-- Portfolio Management Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="bg-card border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-inter font-semibold">Portfolio Sections</h3>
+                            <button class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+                                <i class="fas fa-plus mr-2"></i>Add Section
+                            </button>
+                        </div>
+                        
+                        <!-- Portfolio Section Items -->
+                        <div class="space-y-4">
+                            <div class="border border-border rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-3 h-3 rounded-full bg-success"></div>
+                                        <h4 class="font-medium">Professional Experience</h4>
+                                        <span class="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">Visible</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button class="text-secondary hover:text-secondary/80">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-muted-foreground hover:text-accent">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </button>
+                                        <button class="text-destructive hover:text-destructive/80">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-muted-foreground">AI Wonders Professional Business Leader | Sr. Cybersecurity Consultant...</p>
+                            </div>
+
+                            <div class="border border-border rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-3 h-3 rounded-full bg-success"></div>
+                                        <h4 class="font-medium">Skills & Expertise</h4>
+                                        <span class="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">Visible</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button class="text-secondary hover:text-secondary/80">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-muted-foreground hover:text-accent">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </button>
+                                        <button class="text-destructive hover:text-destructive/80">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-muted-foreground">Project management, automation, process optimization...</p>
+                            </div>
+
+                            <div class="border border-border rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-3 h-3 rounded-full bg-muted"></div>
+                                        <h4 class="font-medium">Testimonials</h4>
+                                        <span class="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">Hidden</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button class="text-secondary hover:text-secondary/80">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-success hover:text-success/80">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-destructive hover:text-destructive/80">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-muted-foreground">Client testimonials and recommendations...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="bg-card border border-border rounded-lg p-6">
+                        <h3 class="text-lg font-inter font-semibold mb-4">Quick Stats</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-muted-foreground">Portfolio Views</span>
+                                <span class="font-medium" data-bind="portfolioViews">2,847</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-muted-foreground">Blog Posts</span>
+                                <span class="font-medium" data-bind="blogPostCount">24</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-muted-foreground">Comments</span>
+                                <span class="font-medium" data-bind="commentCount">156</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-muted-foreground">Forum Posts</span>
+                                <span class="font-medium" data-bind="forumPostCount">43</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: AdminDashboard -->
+    </div>
+
+    <!-- Public Portfolio View -->
+    <div id="publicView">
+        <!-- @COMPONENT: HeroSection [professional introduction with dynamic content] -->
+        <section class="bg-gradient-to-br from-primary to-secondary text-primary-foreground">
+            <div class="max-w-7xl mx-auto px-6 py-20">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h1 class="text-5xl lg:text-6xl font-playfair font-bold mb-6 leading-tight">
+                            Hello, I am <br>
+                            <span data-bind="fullName">Vaibhav Selukar</span>
+                        </h1>
+                        <p class="text-xl text-primary-foreground/90 mb-8 leading-relaxed" data-bind="tagline">
+                            A visionary leader, bridging the gap between technology and business to create meaningful impact.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button class="px-8 py-3 bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-colors font-medium">
+                                View My Work
+                            </button>
+                            <button class="px-8 py-3 border border-primary-foreground/30 text-primary-foreground rounded-lg hover:bg-primary-foreground/10 transition-colors font-medium">
+                                Download Resume
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="relative">
+                            <!-- Professional headshot -->
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400" 
+                                 alt="Vaibhav Selukar professional headshot" 
+                                 class="w-80 h-80 rounded-2xl object-cover shadow-2xl" 
+                                 data-bind="profileImage" />
+                            <div class="absolute -bottom-6 -right-6 bg-accent text-accent-foreground p-4 rounded-2xl shadow-lg">
+                                <i class="fas fa-crown text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: HeroSection -->
+
+        <!-- @COMPONENT: AboutSection [professional overview with achievements] -->
+        <section id="portfolio" class="py-20">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-playfair font-bold text-primary mb-4">Who I Am and What I Do</h2>
+                    <p class="text-xl text-muted-foreground max-w-3xl mx-auto">Transforming businesses through innovative technology solutions and strategic leadership</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-2xl font-playfair font-semibold text-primary mb-4">Professional Journey</h3>
+                                <p class="text-muted-foreground leading-relaxed" data-bind="professionalSummary">
+                                    As a Senior Business Leader at AI Wonders Professional and a Sr. Cybersecurity Consultant at Project Management Office Lead, 
+                                    I bring together deep technical expertise with strategic business acumen to drive digital transformation initiatives.
+                                </p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="text-center p-6 bg-muted rounded-lg">
+                                    <div class="text-3xl font-bold text-primary mb-2" data-bind="experienceYears">8+</div>
+                                    <div class="text-sm text-muted-foreground">Years Experience</div>
+                                </div>
+                                <div class="text-center p-6 bg-muted rounded-lg">
+                                    <div class="text-3xl font-bold text-primary mb-2" data-bind="projectsCompleted">50+</div>
+                                    <div class="text-sm text-muted-foreground">Projects Completed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <!-- Skills word cloud visual representation -->
+                        <div class="bg-gradient-to-br from-muted to-card p-8 rounded-2xl">
+                            <h3 class="text-xl font-playfair font-semibold text-primary mb-6 text-center">Core Expertise</h3>
+                            <div class="space-y-4">
+                                <!-- @MAP: skills.map(skill => ( -->
+                                <div class="flex flex-wrap gap-3">
+                                    <span class="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium">Project Management</span>
+                                    <span class="px-4 py-2 bg-secondary text-secondary-foreground rounded-full text-sm">Automation</span>
+                                    <span class="px-3 py-2 bg-accent text-accent-foreground rounded-full text-sm">Process Optimization</span>
+                                </div>
+                                <div class="flex flex-wrap gap-3">
+                                    <span class="px-3 py-2 bg-muted text-muted-foreground rounded-full text-sm">Agile Methodology</span>
+                                    <span class="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm">Team Leadership</span>
+                                    <span class="px-3 py-2 bg-secondary text-secondary-foreground rounded-full text-sm">Strategic Planning</span>
+                                </div>
+                                <div class="flex flex-wrap gap-3">
+                                    <span class="px-3 py-2 bg-accent text-accent-foreground rounded-full text-sm">Cybersecurity</span>
+                                    <span class="px-4 py-2 bg-muted text-muted-foreground rounded-full text-sm">AI Integration</span>
+                                    <span class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm">Digital Transformation</span>
+                                </div>
+                                <!-- @END_MAP )) -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: AboutSection -->
+
+        <!-- @COMPONENT: ExperienceSection [professional experience showcase] -->
+        <section class="py-20 bg-muted">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-playfair font-bold text-primary mb-4">Professional Experience</h2>
+                    <p class="text-xl text-muted-foreground">I'm fortunate to have worked with these companies</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                    <!-- @MAP: companies.map(company => ( -->
+                    <div class="bg-card border border-border rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
+                        <!-- Company logos would go here using CDN or uploaded assets -->
+                        <div class="w-16 h-16 bg-primary/10 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-building text-primary text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-foreground" data-bind="company.name">AI Wonders</h4>
+                        <p class="text-sm text-muted-foreground" data-bind="company.role">Senior Business Leader</p>
+                    </div>
+                    <div class="bg-card border border-border rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
+                        <div class="w-16 h-16 bg-secondary/10 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-secondary text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-foreground">PMO Consulting</h4>
+                        <p class="text-sm text-muted-foreground">Cybersecurity Consultant</p>
+                    </div>
+                    <div class="bg-card border border-border rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
+                        <div class="w-16 h-16 bg-accent/10 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-rocket text-accent text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-foreground">TechCorp</h4>
+                        <p class="text-sm text-muted-foreground">Lead Developer</p>
+                    </div>
+                    <div class="bg-card border border-border rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
+                        <div class="w-16 h-16 bg-success/10 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-cogs text-success text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-foreground">InnovateLab</h4>
+                        <p class="text-sm text-muted-foreground">Technology Consultant</p>
+                    </div>
+                    <!-- @END_MAP )) -->
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: ExperienceSection -->
+
+        <!-- @COMPONENT: TestimonialsSection [client feedback and recommendations] -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-playfair font-bold text-primary mb-4">What My Colleagues Say</h2>
+                    <p class="text-xl text-muted-foreground">Feedback from industry professionals and collaborators</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- @MAP: testimonials.map(testimonial => ( -->
+                    <div class="bg-card border border-border rounded-2xl p-8">
+                        <div class="flex items-start space-x-4 mb-6">
+                            <!-- Professional headshot of colleague -->
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&h=150" 
+                                 alt="Professional colleague headshot" 
+                                 class="w-16 h-16 rounded-full object-cover" 
+                                 data-bind="testimonial.avatar" />
+                            <div>
+                                <h4 class="font-semibold text-foreground" data-bind="testimonial.name">Rahul Sharma</h4>
+                                <p class="text-sm text-muted-foreground" data-bind="testimonial.title">Founder and CEO, TechVenture</p>
+                            </div>
+                        </div>
+                        <blockquote class="text-muted-foreground italic leading-relaxed" data-bind="testimonial.content">
+                            "We employed Vaibhav's consulting services at TechVenture, and collectively M.E is outstanding understanding and managing our PMO structure. His excellence technical and business leadership capabilities have been one of our core reasons for impressive success."
+                        </blockquote>
+                    </div>
+
+                    <div class="bg-card border border-border rounded-2xl p-8">
+                        <div class="flex items-start space-x-4 mb-6">
+                            <!-- Professional headshot of colleague -->
+                            <img src="https://pixabay.com/get/g8882e89872852831c2e714d6f7a5a463dbd11fd7487b55e77621a0d6df3c38ed6e17395ff66183175144da8c58b6f7e4c0f93bec75fdbe56a5e246fbe1d00fdf_1280.jpg" 
+                                 alt="Professional colleague headshot" 
+                                 class="w-16 h-16 rounded-full object-cover" />
+                            <div>
+                                <h4 class="font-semibold text-foreground">Sarah Chen</h4>
+                                <p class="text-sm text-muted-foreground">CTO, InnovateSolutions</p>
+                            </div>
+                        </div>
+                        <blockquote class="text-muted-foreground italic leading-relaxed">
+                            "Vaibhav's strategic thinking and technical expertise have been instrumental in our digital transformation journey. His ability to translate complex technical concepts into actionable business strategies is remarkable."
+                        </blockquote>
+                    </div>
+                    <!-- @END_MAP )) -->
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: TestimonialsSection -->
+
+        <!-- @COMPONENT: BlogSection [interactive blog with community features] -->
+        <section id="blog" class="py-20 bg-muted">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-playfair font-bold text-primary mb-4">Latest Blog Posts</h2>
+                    <p class="text-xl text-muted-foreground">Insights on technology, leadership, and innovation</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- @MAP: blogPosts.map(post => ( -->
+                    <article class="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+                        <!-- Blog post featured image -->
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" 
+                             alt="Technology and digital transformation concept" 
+                             class="w-full h-48 object-cover" 
+                             data-bind="post.featuredImage" />
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium" data-bind="post.category">Technology</span>
+                                <span class="text-xs text-muted-foreground" data-bind="post.readTime">5 min read</span>
+                            </div>
+                            <h3 class="text-xl font-inter font-semibold text-foreground mb-3 line-clamp-2" data-bind="post.title">
+                                The Future of AI in Business: Strategic Implementation
+                            </h3>
+                            <p class="text-muted-foreground mb-4 line-clamp-3" data-bind="post.excerpt">
+                                Exploring how artificial intelligence is reshaping business operations and the strategic considerations for successful implementation...
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-sm text-muted-foreground" data-bind="post.publishDate">Dec 15, 2024</span>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fas fa-heart text-accent"></i>
+                                        <span class="text-sm text-muted-foreground" data-bind="post.likes">24</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fas fa-comment text-secondary"></i>
+                                        <span class="text-sm text-muted-foreground" data-bind="post.comments">8</span>
+                                    </div>
+                                </div>
+                                <button class="text-primary hover:text-primary/80 transition-colors" data-event="click:sharePost">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+                        <!-- Blog post about cybersecurity -->
+                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" 
+                             alt="Cybersecurity and data protection concept" 
+                             class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 bg-accent/10 text-accent rounded-full text-xs font-medium">Security</span>
+                                <span class="text-xs text-muted-foreground">7 min read</span>
+                            </div>
+                            <h3 class="text-xl font-inter font-semibold text-foreground mb-3 line-clamp-2">
+                                Modern Cybersecurity Challenges in Enterprise
+                            </h3>
+                            <p class="text-muted-foreground mb-4 line-clamp-3">
+                                A comprehensive look at emerging security threats and how organizations can build resilient defense strategies...
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-sm text-muted-foreground">Dec 12, 2024</span>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fas fa-heart text-accent"></i>
+                                        <span class="text-sm text-muted-foreground">31</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fas fa-comment text-secondary"></i>
+                                        <span class="text-sm text-muted-foreground">12</span>
+                                    </div>
+                                </div>
+                                <button class="text-primary hover:text-primary/80 transition-colors">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+                        <!-- Blog post about leadership -->
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" 
+                             alt="Business leadership and team collaboration" 
+                             class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 bg-secondary/10 text-secondary rounded-full text-xs font-medium">Leadership</span>
+                                <span class="text-xs text-muted-foreground">4 min read</span>
+                            </div>
+                            <h3 class="text-xl font-inter font-semibold text-foreground mb-3 line-clamp-2">
+                                Building High-Performance Teams in Remote Settings
+                            </h3>
+                            <p class="text-muted-foreground mb-4 line-clamp-3">
+                                Strategies for fostering collaboration and maintaining productivity in distributed team environments...
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-sm text-muted-foreground">Dec 10, 2024</span>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fas fa-heart text-accent"></i>
+                                        <span class="text-sm text-muted-foreground">18</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fas fa-comment text-secondary"></i>
+                                        <span class="text-sm text-muted-foreground">5</span>
+                                    </div>
+                                </div>
+                                <button class="text-primary hover:text-primary/80 transition-colors">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- @END_MAP )) -->
+                </div>
+
+                <!-- Blog Interaction Features -->
+                <div class="bg-card border border-border rounded-2xl p-8">
+                    <h3 class="text-2xl font-playfair font-bold text-primary mb-6">Join the Conversation</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <i class="fas fa-comments text-primary text-2xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-foreground mb-2">Comment & Discuss</h4>
+                            <p class="text-sm text-muted-foreground">Share your thoughts and engage with fellow readers</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-secondary/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <i class="fas fa-share-nodes text-secondary text-2xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-foreground mb-2">Share Articles</h4>
+                            <p class="text-sm text-muted-foreground">Spread knowledge across your professional network</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-accent/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <i class="fas fa-at text-accent text-2xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-foreground mb-2">Tag Colleagues</h4>
+                            <p class="text-sm text-muted-foreground">Mention others to join specific discussions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: BlogSection -->
+
+        <!-- @COMPONENT: CommunitySection [contests, FAQ, Q&A forum] -->
+        <section id="community" class="py-20 bg-gradient-to-br from-primary/5 to-secondary/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-playfair font-bold text-primary mb-4">Community Hub</h2>
+                    <p class="text-xl text-muted-foreground">Connect, learn, and grow together</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Contests Section -->
+                    <div class="bg-card border border-border rounded-2xl p-8">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-trophy text-accent text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-playfair font-bold text-primary">Contests</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-accent pl-4">
+                                <h4 class="font-semibold text-foreground" data-bind="contest.title">Innovation Challenge 2024</h4>
+                                <p class="text-sm text-muted-foreground" data-bind="contest.deadline">Ends Dec 31, 2024</p>
+                                <p class="text-sm text-muted-foreground mt-2">Submit your most innovative tech solution</p>
+                            </div>
+                            <div class="border-l-4 border-secondary pl-4">
+                                <h4 class="font-semibold text-foreground">Case Study Competition</h4>
+                                <p class="text-sm text-muted-foreground">Ends Jan 15, 2025</p>
+                                <p class="text-sm text-muted-foreground mt-2">Share your project management success story</p>
+                            </div>
+                        </div>
+                        <button class="w-full mt-6 px-4 py-2 bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-colors">
+                            View All Contests
+                        </button>
+                    </div>
+
+                    <!-- FAQ Section -->
+                    <div class="bg-card border border-border rounded-2xl p-8">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-question-circle text-secondary text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-playfair font-bold text-primary">FAQ</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <!-- @MAP: faqs.map(faq => ( -->
+                            <div class="border-b border-border pb-4 last:border-b-0">
+                                <button class="w-full text-left font-medium text-foreground hover:text-primary transition-colors" data-event="click:toggleFaq">
+                                    How can I book a consultation?
+                                    <i class="fas fa-chevron-down float-right mt-1"></i>
+                                </button>
+                                <div class="hidden mt-2 text-sm text-muted-foreground" data-bind="faq.answer">
+                                    You can book a consultation through the contact form or email me directly.
+                                </div>
+                            </div>
+                            <div class="border-b border-border pb-4">
+                                <button class="w-full text-left font-medium text-foreground hover:text-primary transition-colors">
+                                    What services do you offer?
+                                    <i class="fas fa-chevron-down float-right mt-1"></i>
+                                </button>
+                            </div>
+                            <div class="border-b border-border pb-4 last:border-b-0">
+                                <button class="w-full text-left font-medium text-foreground hover:text-primary transition-colors">
+                                    How do I join the community?
+                                    <i class="fas fa-chevron-down float-right mt-1"></i>
+                                </button>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                        <button class="w-full mt-6 px-4 py-2 border border-border text-foreground rounded-lg hover:bg-muted transition-colors">
+                            View All FAQs
+                        </button>
+                    </div>
+
+                    <!-- Q&A Forum -->
+                    <div class="bg-card border border-border rounded-2xl p-8">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-primary text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-playfair font-bold text-primary">Q&A Forum</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <!-- @MAP: forumPosts.map(post => ( -->
+                            <div class="border border-border rounded-lg p-4">
+                                <div class="flex items-start space-x-3">
+                                    <!-- Forum user avatar -->
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                                         alt="Forum user avatar" 
+                                         class="w-10 h-10 rounded-full object-cover" 
+                                         data-bind="post.userAvatar" />
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-foreground text-sm" data-bind="post.title">Best practices for agile project management?</h4>
+                                        <div class="flex items-center space-x-4 mt-2">
+                                            <span class="text-xs text-muted-foreground" data-bind="post.author">@john_doe</span>
+                                            <span class="text-xs text-muted-foreground" data-bind="post.timestamp">2h ago</span>
+                                            <span class="text-xs text-success" data-bind="post.replies">3 replies</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border border-border rounded-lg p-4">
+                                <div class="flex items-start space-x-3">
+                                    <!-- Forum user avatar -->
+                                    <img src="https://pixabay.com/get/g636694ed87788b774e9b63f888eace8de5c7472ab5a69c7c31c562bed4372b761efd2899cc0031cf6c55e04d4bd6e9bc44af4878bf027da46149a0afa226aa98_1280.jpg" 
+                                         alt="Forum user avatar" 
+                                         class="w-10 h-10 rounded-full object-cover" />
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-foreground text-sm">AI integration roadmap for startups?</h4>
+                                        <div class="flex items-center space-x-4 mt-2">
+                                            <span class="text-xs text-muted-foreground">@sarah_tech</span>
+                                            <span class="text-xs text-muted-foreground">4h ago</span>
+                                            <span class="text-xs text-success">1 reply</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                        <button class="w-full mt-6 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+                            Join Discussion
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: CommunitySection -->
+
+        <!-- @COMPONENT: ContactSection [professional contact information] -->
+        <section id="contact" class="py-20">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-playfair font-bold text-primary mb-4">Wanna Get in Touch</h2>
+                    <h3 class="text-6xl font-playfair font-bold text-muted-foreground/20 mb-8">Contact Us</h3>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <div>
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-2xl font-playfair font-semibold text-primary mb-6">Let's Connect</h3>
+                                <p class="text-muted-foreground leading-relaxed mb-8">
+                                    Ready to discuss your next project or explore collaboration opportunities? 
+                                    I'm always excited to connect with fellow innovators and forward-thinking organizations.
+                                </p>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-envelope text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-foreground">Email</h4>
+                                        <p class="text-muted-foreground" data-bind="contactEmail">vaibhav.selukar@gmail.com</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-phone text-secondary"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-foreground">Phone</h4>
+                                        <p class="text-muted-foreground" data-bind="contactPhone">+91 9876 543 210</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-map-marker-alt text-accent"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-foreground">Location</h4>
+                                        <p class="text-muted-foreground" data-bind="location">Nagpur, Maharashtra, India</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex space-x-4 pt-4">
+                                <a href="#" class="w-12 h-12 bg-primary text-primary-foreground rounded-lg flex items-center justify-center hover:bg-primary/90 transition-colors">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-secondary text-secondary-foreground rounded-lg flex items-center justify-center hover:bg-secondary/90 transition-colors">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-accent text-accent-foreground rounded-lg flex items-center justify-center hover:bg-accent/90 transition-colors">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="bg-card border border-border rounded-2xl p-8">
+                            <h3 class="text-xl font-inter font-semibold text-primary mb-6">Send a Message</h3>
+                            <form class="space-y-6" data-event="submit:handleContactSubmit">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-foreground mb-2">Name</label>
+                                        <input type="text" class="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Your name" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-foreground mb-2">Email</label>
+                                        <input type="email" class="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring" placeholder="your.email@company.com" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-foreground mb-2">Subject</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Project consultation">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-foreground mb-2">Message</label>
+                                    <textarea rows="6" class="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring resize-none" placeholder="Tell me about your project..."></textarea>
+                                </div>
+                                <button type="submit" class="w-full px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium">
+                                    Send Message
+                                    <i class="fas fa-paper-plane ml-2"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: ContactSection -->
+    </div>
+
+    <!-- @COMPONENT: BlogPostModal [detailed blog post view with comments] -->
+    <div id="blogModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 hidden">
+        <div class="min-h-full flex items-start justify-center p-4 pt-16">
+            <div class="bg-card border border-border rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="sticky top-0 bg-card border-b border-border p-6 flex items-center justify-between">
+                    <h2 class="text-2xl font-playfair font-bold text-primary">The Future of AI in Business</h2>
+                    <button class="text-muted-foreground hover:text-foreground" data-event="click:closeBlogModal">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="p-6">
+                    <!-- Blog Content -->
+                    <div class="prose prose-lg max-w-none mb-8">
+                        <div class="flex items-center space-x-4 mb-6">
+                            <span class="text-sm text-muted-foreground" data-bind="post.publishDate">December 15, 2024</span>
+                            <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs">Technology</span>
+                            <span class="text-sm text-muted-foreground">5 min read</span>
+                        </div>
+                        <!-- Blog post featured image -->
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=600" 
+                             alt="AI and business technology integration" 
+                             class="w-full h-64 object-cover rounded-xl mb-6" />
+                        <div class="space-y-4 text-foreground" data-mock="true">
+                            <p>Artificial Intelligence is no longer a futuristic concept—it's a present reality that's transforming how businesses operate, make decisions, and engage with customers. As organizations worldwide grapple with digital transformation, AI has emerged as a critical differentiator.</p>
+                            <p>The key to successful AI implementation lies not just in the technology itself, but in the strategic approach to integration. Companies that succeed understand that AI is not about replacing human intelligence, but augmenting it to achieve unprecedented levels of efficiency and innovation.</p>
+                        </div>
+                    </div>
+
+                    <!-- Blog Interactions -->
+                    <div class="border-t border-border pt-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center space-x-6">
+                                <button class="flex items-center space-x-2 text-muted-foreground hover:text-accent transition-colors" data-event="click:toggleLike">
+                                    <i class="fas fa-heart"></i>
+                                    <span data-bind="post.likesCount">24</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-muted-foreground hover:text-secondary transition-colors">
+                                    <i class="fas fa-comment"></i>
+                                    <span data-bind="post.commentsCount">8</span>
+                                </button>
+                                <button class="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors" data-event="click:sharePost">
+                                    <i class="fas fa-share"></i>
+                                    <span>Share</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Comments Section -->
+                        <div class="space-y-6">
+                            <h4 class="text-lg font-inter font-semibold text-primary">Comments</h4>
+                            
+                            <!-- Comment Form -->
+                            <div class="bg-muted rounded-lg p-4">
+                                <textarea class="w-full bg-background border border-input rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-ring resize-none" 
+                                          rows="3" 
+                                          placeholder="Share your thoughts... Use @username to tag someone"></textarea>
+                                <div class="flex items-center justify-between mt-3">
+                                    <div class="flex items-center space-x-4">
+                                        <button class="text-muted-foreground hover:text-primary" title="Add emoji">
+                                            <i class="fas fa-smile"></i>
+                                        </button>
+                                        <button class="text-muted-foreground hover:text-primary" title="Attach file">
+                                            <i class="fas fa-paperclip"></i>
+                                        </button>
+                                    </div>
+                                    <button class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors" data-event="click:submitComment">
+                                        Comment
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Existing Comments -->
+                            <!-- @MAP: comments.map(comment => ( -->
+                            <div class="border border-border rounded-lg p-4">
+                                <div class="flex items-start space-x-3">
+                                    <!-- Commenter avatar -->
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
+                                         alt="Commenter avatar" 
+                                         class="w-10 h-10 rounded-full object-cover" 
+                                         data-bind="comment.userAvatar" />
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <h5 class="font-medium text-foreground" data-bind="comment.userName">Alex Kumar</h5>
+                                            <span class="text-xs text-muted-foreground" data-bind="comment.timestamp">2 hours ago</span>
+                                        </div>
+                                        <p class="text-muted-foreground text-sm leading-relaxed" data-bind="comment.content">
+                                            Great insights on AI implementation! I particularly appreciate your point about augmenting human intelligence rather than replacing it. 
+                                            <span class="text-secondary">@vaibhav</span> have you seen similar patterns in cybersecurity applications?
+                                        </p>
+                                        <div class="flex items-center space-x-4 mt-3">
+                                            <button class="text-xs text-muted-foreground hover:text-accent" data-event="click:likeComment">
+                                                <i class="fas fa-heart mr-1"></i>
+                                                <span data-bind="comment.likes">5</span>
+                                            </button>
+                                            <button class="text-xs text-muted-foreground hover:text-secondary" data-event="click:replyToComment">
+                                                Reply
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: BlogPostModal -->
+
+    <!-- @COMPONENT: Footer [professional footer with links] -->
+    <footer class="bg-primary text-primary-foreground py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-playfair font-bold mb-4">Vaibhav Selukar</h3>
+                    <p class="text-primary-foreground/80 mb-6 leading-relaxed">
+                        Empowering businesses through strategic technology leadership and innovative solutions. 
+                        Let's build the future together.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-primary-foreground/10 rounded-lg flex items-center justify-center hover:bg-primary-foreground/20 transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-primary-foreground/80">
+                        <li><a href="#portfolio" class="hover:text-primary-foreground transition-colors">Portfolio</a></li>
+                        <li><a href="#blog" class="hover:text-primary-foreground transition-colors">Blog</a></li>
+                        <li><a href="#community" class="hover:text-primary-foreground transition-colors">Community</a></li>
+                        <li><a href="#contact" class="hover:text-primary-foreground transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-primary-foreground/80">
+                        <li><a href="#" class="hover:text-primary-foreground transition-colors">Strategy Consulting</a></li>
+                        <li><a href="#" class="hover:text-primary-foreground transition-colors">Project Management</a></li>
+                        <li><a href="#" class="hover:text-primary-foreground transition-colors">Cybersecurity</a></li>
+                        <li><a href="#" class="hover:text-primary-foreground transition-colors">AI Integration</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-primary-foreground/20 mt-12 pt-8 text-center">
+                <p class="text-primary-foreground/60">&copy; 2024 Vaibhav Selukar. All rights reserved. Built with passion for innovation.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: Footer -->
+
+    <script>
+    // View Toggle Functionality
+    (function() {
+        const viewToggle = document.getElementById('viewToggle');
+        const adminView = document.getElementById('adminView');
+        const publicView = document.getElementById('publicView');
+        let currentView = 'public';
+
+        viewToggle.addEventListener('click', function() {
+            if (currentView === 'public') {
+                adminView.classList.remove('hidden');
+                publicView.classList.add('hidden');
+                viewToggle.innerHTML = '<i class="fas fa-user mr-2"></i>Admin View';
+                currentView = 'admin';
+            } else {
+                adminView.classList.add('hidden');
+                publicView.classList.remove('hidden');
+                viewToggle.innerHTML = '<i class="fas fa-eye mr-2"></i>Public View';
+                currentView = 'public';
+            }
+        });
+
+        // TODO: Implement authentication check
+        // TODO: Implement role-based access control
+        // TODO: Add session management
+    })();
+
+    // Blog Modal Functionality
+    (function() {
+        const blogModal = document.getElementById('blogModal');
+        const blogPosts = document.querySelectorAll('article');
+
+        blogPosts.forEach(post => {
+            post.addEventListener('click', function() {
+                blogModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('[data-event*="closeBlogModal"]')) {
+                blogModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // TODO: Implement blog post loading
+        // TODO: Add comment functionality
+        // TODO: Implement user tagging system
+    })();
+
+    // FAQ Toggle Functionality
+    (function() {
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('[data-event*="toggleFaq"]')) {
+                const button = e.target.closest('button');
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                
+                if (answer.classList.contains('hidden')) {
+                    answer.classList.remove('hidden');
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    answer.classList.add('hidden');
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            }
+        });
+    })();
+
+    // Form Submission Handlers
+    (function() {
+        document.addEventListener('submit', function(e) {
+            if (e.target.closest('[data-event*="handleContactSubmit"]')) {
+                e.preventDefault();
+                // TODO: Implement form validation
+                // TODO: Send email notification
+                // TODO: Store form submission in database
+                alert('Thank you for your message! I\'ll get back to you soon.');
+            }
+        });
+
+        // TODO: Implement CRUD operations for admin dashboard
+        // TODO: Add file upload functionality for images
+        // TODO: Implement rich text editor for blog posts
+        // TODO: Add form validation and error handling
+        // TODO: Implement real-time notifications
+    })();
+    </script>
+</body>
+</html>
